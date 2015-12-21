@@ -21,5 +21,7 @@ export default {
     { fullName: 'Thursday'  , displayName: 'T' } ,
     { fullName: 'Friday'    , displayName: 'F' } ,
     { fullName: 'Saturday'  , displayName: 'S' }
-  ]
+  ],
+  nextLabel: 'Next',
+  previousLabel: 'Previous'
 }
