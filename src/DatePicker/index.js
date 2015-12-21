@@ -102,6 +102,7 @@ export default class DatePicker {
     clearTimeout(this.closeTimeout)
     this.selectDay(this.state.day, true)
     this.ui.calendar.removeAttribute('style')
+    this.ui.selectedDay.focus()
     this.state.isOpen = true
   }
 
@@ -201,5 +202,6 @@ export default class DatePicker {
   render() {
     this.ui.monthHeader.textContent = `${this.state.monthName} ${this.state.fullYear}`
     this.ui.calendarPage.innerHTML = this.renderRows()
+    this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button')
   }
 }
