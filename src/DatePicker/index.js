@@ -2,13 +2,14 @@ import delegate from 'delegate'
 import defaults from './lib/defaults'
 import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
+import styles   from './lib/styles'
 
 export default class DatePicker {
   constructor(el, options = {}) {
     this.props = Object.assign({}, defaults, options)
-    this.setUI(el)
     this.setInitialState()
-    this.selectDay(this.state.day, true)
+    this.setUI(el)
+    this.selectDay(this.state.day)
     this.listen()
   }
 
@@ -21,10 +22,10 @@ export default class DatePicker {
         month: today.getMonth()
       }
     }
-    this.setDate(today)
+    this.setDate(today, true)
   }
 
-  setDate(date) {
+  setDate(date, silent) {
     const month = date.getMonth()
     const day = date.getDate()
     const year = date.getFullYear()
@@ -33,12 +34,13 @@ export default class DatePicker {
       date: date,
       day: day,
       monthName: monthName,
+      monthNameFull: this.props.months[month].fullName,
       month: month,
       monthDisplay: month + 1,
       fullYear: date.getFullYear(),
       totalDays: this.getDays(year, month),
       firstWeekdayValue: this.getFirstDay(year, month)
-    })
+    }, silent)
   }
 
   listen() {
@@ -70,10 +72,11 @@ export default class DatePicker {
         <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker">Toggle Date Picker</button>
 
         <div class="date-picker__calendar" style="display: none">
-          <p class="calendar__header" role="heading" aria-live="assertive"></p>
           <button id="calendar__prev" type="button">${this.props.previousLabel}</button>
           <button id="calendar__next" type="button">${this.props.nextLabel}</button>
+          <p class="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
           <table>
+            <caption class="date-picker__caption" style="${styles.visuallyHidden}"></caption>
             <thead class="datepicker__day-names">
               <tr>
                 ${this.renderDayNames()}
@@ -86,14 +89,15 @@ export default class DatePicker {
     `.trim()
     this.ui.toggle = this.ui.datePicker.querySelector('.date-picker__toggle')
     this.ui.calendar = this.ui.datePicker.querySelector('.date-picker__calendar')
+    this.ui.monthCaption = this.ui.datePicker.querySelector('.date-picker__caption')
     this.ui.monthHeader = this.ui.datePicker.querySelector('.calendar__header')
     this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
     this.ui.wrapper.appendChild(this.ui.datePicker)
   }
 
-  setState(state) {
+  setState(state, silent) {
     this.state = Object.assign({}, this.state, state)
-    this.render()
+    if(!silent) this.render()
   }
 
   toggle() {
@@ -104,6 +108,7 @@ export default class DatePicker {
     clearTimeout(this.closeTimeout)
     this.ui.calendar.removeAttribute('style')
     this.ui.selectedDay.focus()
+    this.ui.monthHeader.innerHTML = this.renderMonthHeader()
     this.state.isOpen = true
   }
 
@@ -200,8 +205,13 @@ export default class DatePicker {
     }, '')
   }
 
+  renderMonthHeader() {
+    return `<span style="${styles.visuallyHidden}">${this.state.monthNameFull}</span> <span aria-hidden="true">${this.state.monthName}</span> ${this.state.fullYear}`
+  }
+
   render() {
-    this.ui.monthHeader.textContent = `${this.state.monthName} ${this.state.fullYear}`
+    this.ui.monthHeader.innerHTML = this.renderMonthHeader()
+    this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
     this.ui.calendarPage.innerHTML = this.renderRows()
     this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button')
   }
