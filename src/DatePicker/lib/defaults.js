@@ -55,6 +55,12 @@ export default {
     'Thirtieth',
     'Thirty First'
   ],
-  nextLabel: 'Next',
-  previousLabel: 'Previous'
+  next: {
+    html: '>',
+    label: 'Next Month'
+  },
+  prev: {
+    html: '<',
+    label: 'Previous Month'
+  }
 }

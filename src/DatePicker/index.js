@@ -69,14 +69,14 @@ export default class DatePicker {
 
     this.ui.datePicker.className = 'date-picker'
     this.ui.datePicker.innerHTML = `
-        <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker">Toggle Date Picker</button>
+        <button type="button" id="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="date-picker__calendar">Toggle Date Picker</button>
 
-        <div class="date-picker__calendar" style="display: none">
-          <button id="calendar__prev" type="button">${this.props.previousLabel}</button>
-          <button id="calendar__next" type="button">${this.props.nextLabel}</button>
-          <p class="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
+        <div id="date-picker__calendar" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">
+          <button id="calendar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
+          <button id="calendar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
+          <p id="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
           <table>
-            <caption class="date-picker__caption" style="${styles.visuallyHidden}"></caption>
+            <caption id="date-picker__caption" style="${styles.visuallyHidden}"></caption>
             <thead class="datepicker__day-names">
               <tr>
                 ${this.renderDayNames()}
@@ -87,10 +87,10 @@ export default class DatePicker {
           </table>
         </div>
     `.trim()
-    this.ui.toggle = this.ui.datePicker.querySelector('.date-picker__toggle')
-    this.ui.calendar = this.ui.datePicker.querySelector('.date-picker__calendar')
-    this.ui.monthCaption = this.ui.datePicker.querySelector('.date-picker__caption')
-    this.ui.monthHeader = this.ui.datePicker.querySelector('.calendar__header')
+    this.ui.toggle = this.ui.datePicker.querySelector('#date-picker__toggle')
+    this.ui.calendar = this.ui.datePicker.querySelector('#date-picker__calendar')
+    this.ui.monthCaption = this.ui.datePicker.querySelector('#date-picker__caption')
+    this.ui.monthHeader = this.ui.datePicker.querySelector('#calendar__header')
     this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
     this.ui.wrapper.appendChild(this.ui.datePicker)
   }
@@ -106,6 +106,7 @@ export default class DatePicker {
 
   open() {
     clearTimeout(this.closeTimeout)
+    this.ui.calendar.removeAttribute('aria-hidden')
     this.ui.calendar.removeAttribute('style')
     this.ui.selectedDay.focus()
     this.ui.monthHeader.innerHTML = this.renderMonthHeader()
@@ -120,6 +121,7 @@ export default class DatePicker {
     this.closeTimeout = setTimeout(() => {
       this.ui.calendar.style.display = 'none'
       this.ui.toggle.focus()
+      this.ui.calendar.setAttribute('aria-hidden', true)
       this.state.isOpen = false
     }, 100)
   }
