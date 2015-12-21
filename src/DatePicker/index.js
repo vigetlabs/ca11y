@@ -1,10 +1,7 @@
 import delegate from 'delegate'
 import defaults from './lib/defaults'
-import zeroPad from './lib/zeroPad'
-
-const keys = {
-  esc: 27
-}
+import zeroPad  from './lib/zeroPad'
+import keys     from './lib/keys'
 
 export default class DatePicker {
   constructor(el, options = {}) {
@@ -44,14 +41,13 @@ export default class DatePicker {
   }
 
   listen() {
-    delegate(this.ui.wrapper, '#calendar__next', 'click', this.incrementMonth.bind(this,  1))
-    delegate(this.ui.wrapper, '#calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
-    delegate(this.ui.wrapper, '.calendar__day', 'click', this.onDayClick.bind(this))
-    delegate(this.ui.wrapper, 'button', 'blur', this.close.bind(this), true)
-    delegate(this.ui.wrapper, 'button', 'focus', this.open.bind(this), true)
-    this.ui.input.addEventListener('focus', this.open.bind(this))
-    this.ui.input.addEventListener('blur', this.close.bind(this))
+    delegate(this.ui.calendar, '#calendar__next', 'click', this.incrementMonth.bind(this,  1))
+    delegate(this.ui.calendar, '#calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
+    delegate(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this))
+    delegate(this.ui.calendar, 'button', 'blur', this.close.bind(this), true)
+    delegate(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true)
     this.ui.wrapper.addEventListener('keydown', this.onKeydown.bind(this))
+    this.ui.toggle.addEventListener('click', this.toggle.bind(this))
   }
 
   onKeydown(e) {
@@ -60,21 +56,64 @@ export default class DatePicker {
     }
   }
 
+  setUI(el) {
+    this.ui = {
+      input: el,
+      wrapper: el.parentElement,
+      datePicker: document.createElement('div')
+    }
+
+    this.ui.datePicker.className = 'date-picker'
+    this.ui.datePicker.innerHTML = `
+        <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker">Toggle Date Picker</button>
+
+        <div class="date-picker__calendar" style="display: none">
+          <p class="calendar__header" role="heading"></p>
+          <button id="calendar__prev" type="button">${this.props.previousLabel}</button>
+          <button id="calendar__next" type="button">${this.props.nextLabel}</button>
+          <table>
+            <thead class="datepicker__day-names">
+              <tr>
+                ${this.renderDayNames()}
+              </tr>
+            </thead>
+            <tbody class="datepicker__calendar">
+            </tbody>
+          </table>
+        </div>
+    `.trim()
+    this.ui.toggle = this.ui.datePicker.querySelector('.date-picker__toggle')
+    this.ui.calendar = this.ui.datePicker.querySelector('.date-picker__calendar')
+    this.ui.monthHeader = this.ui.datePicker.querySelector('.calendar__header')
+    this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
+    this.ui.wrapper.appendChild(this.ui.datePicker)
+  }
+
   setState(state) {
     this.state = Object.assign({}, this.state, state)
     this.render()
   }
 
+  toggle() {
+    this.state.isOpen ? this.close() : this.open()
+  }
+
   open() {
     clearTimeout(this.closeTimeout)
     this.selectDay(this.state.day, true)
-    this.ui.datePicker.removeAttribute('style')
+    this.ui.calendar.removeAttribute('style')
+    this.state.isOpen = true
+  }
+
+  cancelClose() {
+    clearTimeout(this.closeTimeout)
   }
 
   close() {
-    clearTimeout(this.closeTimeout)
     this.closeTimeout = setTimeout(() => {
-      this.ui.datePicker.style.display = 'none'
+      this.ui.calendar.style.display = 'none'
+      this.ui.toggle.focus()
+      this.state.isOpen = false
     }, 120)
   }
 
@@ -157,36 +196,6 @@ export default class DatePicker {
       string += `<th aria-label="${day.fullName}">${day.displayName || day.fullName}</th>`
       return string
     }, '')
-  }
-
-  setUI(el) {
-    this.ui = {
-      input: el,
-      wrapper: el.parentElement,
-      toggle: document.createElement('button'),
-      datePicker: document.createElement('div')
-    }
-
-    this.ui.datePicker.className = 'calendar'
-    this.ui.datePicker.style.display = 'none'
-    this.ui.datePicker.innerHTML = `
-      <p class="calendar__header" role="heading"></p>
-      <button id="calendar__prev" type="button">${this.props.previousLabel}</button>
-      <button id="calendar__next" type="button">${this.props.nextLabel}</button>
-      <table>
-        <thead class="datepicker__day-names">
-          <tr>
-            ${this.renderDayNames()}
-          </tr>
-        </thead>
-        <tbody class="datepicker__calendar">
-        </tbody>
-      </table>
-    `.trim()
-
-    this.ui.monthHeader = this.ui.datePicker.querySelector('.calendar__header')
-    this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
-    this.ui.wrapper.appendChild(this.ui.datePicker)
   }
 
   render() {
