@@ -8,6 +8,7 @@ export default class DatePicker {
     this.props = Object.assign({}, defaults, options)
     this.setUI(el)
     this.setInitialState()
+    this.selectDay(this.state.day, true)
     this.listen()
   }
 
@@ -48,6 +49,7 @@ export default class DatePicker {
     delegate(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true)
     this.ui.wrapper.addEventListener('keydown', this.onKeydown.bind(this))
     this.ui.toggle.addEventListener('click', this.toggle.bind(this))
+    this.ui.toggle.addEventListener('focus', this.cancelClose.bind(this))
   }
 
   onKeydown(e) {
@@ -68,7 +70,7 @@ export default class DatePicker {
         <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker">Toggle Date Picker</button>
 
         <div class="date-picker__calendar" style="display: none">
-          <p class="calendar__header" role="heading"></p>
+          <p class="calendar__header" role="heading" aria-live="assertive"></p>
           <button id="calendar__prev" type="button">${this.props.previousLabel}</button>
           <button id="calendar__next" type="button">${this.props.nextLabel}</button>
           <table>
@@ -100,7 +102,6 @@ export default class DatePicker {
 
   open() {
     clearTimeout(this.closeTimeout)
-    this.selectDay(this.state.day, true)
     this.ui.calendar.removeAttribute('style')
     this.ui.selectedDay.focus()
     this.state.isOpen = true
@@ -115,7 +116,7 @@ export default class DatePicker {
       this.ui.calendar.style.display = 'none'
       this.ui.toggle.focus()
       this.state.isOpen = false
-    }, 120)
+    }, 100)
   }
 
   onDayClick(e) {
@@ -125,10 +126,10 @@ export default class DatePicker {
 
   selectDay(day, keepOpen) {
     this.ui.input.value = `${zeroPad(this.state.monthDisplay)}/${zeroPad(day)}/${this.state.fullYear}`
+    this.setState({day})
     if(!keepOpen) {
       this.close()
     }
-    return this.state
   }
 
   incrementMonth(delta) {
@@ -184,7 +185,7 @@ export default class DatePicker {
         const todayClass = this.isToday(day) ? ' -today' : ''
         const selectedClass = this.state.day === day ? ' -selected' : ''
         const data = day ? ` class="calendar__day${todayClass}${selectedClass}" data-day="${day}"` : ''
-        const contents = day ? `<button type="button">${day}</button>` : ''
+        const contents = day ? `<button type="button" aria-label="The ${this.props.dayTitles[day - 1]}">${day}</button>` : ''
         return `<td${data}>${contents}</td>`
       }).join('')
 
@@ -194,7 +195,7 @@ export default class DatePicker {
 
   renderDayNames() {
     return this.props.days.reduce((string, day) => {
-      string += `<th aria-label="${day.fullName}">${day.displayName || day.fullName}</th>`
+      string += `<th scope="col" aria-label="${day.fullName}">${day.displayName || day.fullName}</th>`
       return string
     }, '')
   }
