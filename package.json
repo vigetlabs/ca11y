@@ -9,8 +9,11 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "start": "rm -rf example && webpack --watch & browser-sync start --server --files example/* --files index.html",
-    "prepublish": "rm -rf example && babel src/ca11yndar -d dist & webpack src/standalone.js dist/window.ca11yndar.js -p"
+    "deploy": "webpack -p && npm run sass && gh-pages -d example -b gh-pages",
+    "start": "webpack & npm run sass && npm run watch",
+    "sass": "node-sass src/demo.sass example/demo.css -i",
+    "watch": "node-sass src/demo.sass example/demo.css -i -w & webpack --watch & browser-sync start --server example --files 'example/*, index.html'",
+    "prepublish": "rm -rf example dist && babel src/ca11yndar -d dist & webpack src/standalone.js dist/window.ca11yndar.js -p"
   },
   "keywords": [
     "calendar",
@@ -30,6 +33,8 @@
     "babel-plugin-transform-object-assign": "6.3.13",
     "babel-preset-es2015": "6.3.13",
     "browser-sync": "2.10.1",
+    "gh-pages": "^0.8.0",
+    "node-sass": "^3.4.2",
     "webpack": "1.12.9"
   },
   "dependencies": {
