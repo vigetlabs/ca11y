@@ -1,4 +1,5 @@
 import DatePicker from './DatePicker'
 
-const input = document.getElementById('date-input')
-const datePicker = new DatePicker(input)
+const datePickers = Array.from(document.querySelectorAll('[data-module=DatePicker]') || 0)
+
+datePickers.forEach((input) => new DatePicker(input))

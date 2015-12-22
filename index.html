@@ -5,14 +5,26 @@
     <title>Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
-      .calendar {
-        font-family: sans-serif
+      body {
+        font-family: sans-serif;
+      }
+      .date-picker {
+        display: inline-block;
+        position: relative;
+      }
+      .date-picker__calendar {
+        position: absolute;
+        top: 100%;
+        right: 0
       }
       .calendar__day.-today {
         background-color: lightblue
       }
       .calendar__day.-selected {
         background-color: blue
+      }
+      .date-picker__toggle {
+        display: inline-block;
       }
       form > div {
         margin-bottom: 10px
@@ -26,16 +38,20 @@
   <body>
     <form>
       <div>
-        <label for="foo">Foo</label>
+        <label for="foo">Text</label>
         <input type="text" id="foo">
       </div>
       <div>
         <label for="date-input">Date</label>
-        <input type="text" id="date-input">
+        <input type="text" id="date-input" data-module="DatePicker">
       </div>
       <div>
-        <label for="bar">Bar</label>
+        <label for="bar">More Text</label>
         <input type="text" id="bar">
+      </div>
+      <div>
+        <label for="date-input">Another Date</label>
+        <input type="text" id="date-input" data-module="DatePicker">
       </div>
     </form>
     <script src="dist/demo.js"></script>

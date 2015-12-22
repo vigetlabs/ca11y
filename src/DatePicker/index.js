@@ -4,9 +4,10 @@ import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
 import styles   from './lib/styles'
 
-export default class DatePicker {
+class DatePicker {
   constructor(el, options = {}) {
-    this.props = Object.assign({}, defaults, options)
+    DatePicker.pickers.push(this)
+    this.props = Object.assign({}, defaults, options, {id: DatePicker.pickers.length })
     this.setInitialState()
     this.setUI(el)
     this.selectDay(this.state.day)
@@ -44,8 +45,8 @@ export default class DatePicker {
   }
 
   listen() {
-    delegate(this.ui.calendar, '#calendar__next', 'click', this.incrementMonth.bind(this,  1))
-    delegate(this.ui.calendar, '#calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
+    delegate(this.ui.calendar, '.calendar__next', 'click', this.incrementMonth.bind(this,  1))
+    delegate(this.ui.calendar, '.calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
     delegate(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this))
     delegate(this.ui.calendar, 'button', 'blur', this.close.bind(this), true)
     delegate(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true)
@@ -61,6 +62,8 @@ export default class DatePicker {
   }
 
   setUI(el) {
+    const calendarId = `date-picker-${this.props.id}__calendar`
+
     this.ui = {
       input: el,
       wrapper: el.parentElement,
@@ -68,15 +71,15 @@ export default class DatePicker {
     }
 
     this.ui.datePicker.className = 'date-picker'
+    this.ui.datePicker.id = `date-picker-${this.props.id}`
     this.ui.datePicker.innerHTML = `
-        <button type="button" id="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="date-picker__calendar">Toggle Date Picker</button>
-
-        <div id="date-picker__calendar" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">
-          <button id="calendar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
-          <button id="calendar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
-          <p id="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
+        <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}">Toggle Date Picker</button>
+        <div class="date-picker__calendar" id="${calendarId}" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">
+          <button class="calendar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
+          <button class="calendar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
+          <p class="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
           <table>
-            <caption id="date-picker__caption" style="${styles.visuallyHidden}"></caption>
+            <caption class="date-picker__caption" style="${styles.visuallyHidden}"></caption>
             <thead class="datepicker__day-names">
               <tr>
                 ${this.renderDayNames()}
@@ -87,11 +90,13 @@ export default class DatePicker {
           </table>
         </div>
     `.trim()
-    this.ui.toggle = this.ui.datePicker.querySelector('#date-picker__toggle')
-    this.ui.calendar = this.ui.datePicker.querySelector('#date-picker__calendar')
-    this.ui.monthCaption = this.ui.datePicker.querySelector('#date-picker__caption')
-    this.ui.monthHeader = this.ui.datePicker.querySelector('#calendar__header')
+
+    this.ui.calendar     = this.ui.datePicker.querySelector(`#${calendarId}`)
     this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
+    this.ui.monthCaption = this.ui.datePicker.querySelector('.date-picker__caption')
+    this.ui.monthHeader  = this.ui.datePicker.querySelector('.calendar__header')
+    this.ui.toggle       = this.ui.datePicker.querySelector('.date-picker__toggle')
+
     this.ui.wrapper.appendChild(this.ui.datePicker)
   }
 
@@ -139,6 +144,7 @@ export default class DatePicker {
     }
   }
 
+  // Helpers
   incrementMonth(delta) {
     let month = this.state.month + delta
     let year = this.state.fullYear
@@ -170,6 +176,7 @@ export default class DatePicker {
     return currentDay === day && this.state.month === month && this.state.fullYear === fullYear
   }
 
+  // Rendering
   getGrid() {
     const { firstWeekdayValue, totalDays } = this.state
     const grid = [[], [], [], [], [], []]
@@ -218,3 +225,7 @@ export default class DatePicker {
     this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button')
   }
 }
+
+DatePicker.pickers = []
+
+export default DatePicker
