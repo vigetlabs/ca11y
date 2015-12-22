@@ -3,6 +3,7 @@ import defaults from './lib/defaults'
 import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
 import styles   from './lib/styles'
+import template from './lib/template'
 
 class DatePicker {
   constructor(el, options = {}) {
@@ -72,26 +73,15 @@ class DatePicker {
 
     this.ui.datePicker.className = 'date-picker'
     this.ui.datePicker.id = `date-picker-${this.props.id}`
-    this.ui.datePicker.innerHTML = `
-        <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}">Toggle Date Picker</button>
-        <div class="date-picker__calendar" id="${calendarId}" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">
-          <button class="calendar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
-          <button class="calendar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
-          <p class="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
-          <table>
-            <caption class="date-picker__caption" style="${styles.visuallyHidden}"></caption>
-            <thead class="datepicker__day-names">
-              <tr>
-                ${this.renderDayNames()}
-              </tr>
-            </thead>
-            <tbody class="datepicker__calendar">
-            </tbody>
-          </table>
-        </div>
-    `.trim()
+    this.ui.datePicker.innerHTML = template(
+      Object.assign({}, this.props, {
+        calendarId,
+        monthHeader : this.renderMonthHeader(),
+        dayNames    : this.renderDayNames()
+      })
+    )
 
-    this.ui.calendar     = this.ui.datePicker.querySelector(`#${calendarId}`)
+    this.ui.calendar     = this.ui.datePicker.querySelector(`#${ calendarId }`)
     this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
     this.ui.monthCaption = this.ui.datePicker.querySelector('.date-picker__caption')
     this.ui.monthHeader  = this.ui.datePicker.querySelector('.calendar__header')
