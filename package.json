@@ -1,22 +1,22 @@
 {
-  "name": "datepicker",
+  "name": "ca11yndar",
   "version": "0.0.1",
   "description": "A lightweight accessible datepicker",
-  "homepage": "http://code.viget.com/datepicker/",
+  "homepage": "http://code.viget.com/ca11yndar/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/vigetlabs/datepicker.git"
+    "url": "git://github.com/vigetlabs/ca11yndar.git"
   },
   "main": "dist/index.js",
   "scripts": {
-    "start": "rm -rf example && webpack --watch & browser-sync start --server --files example --index example/index.html",
-    "prepublish": "rm -rf example && babel src/DatePicker -d dist & webpack src/standalone.js dist/window.DatePicker.js -p"
+    "start": "rm -rf example && webpack --watch & browser-sync start --server --files example/* --files index.html",
+    "prepublish": "rm -rf example && babel src/ca11yndar -d dist & webpack src/standalone.js dist/window.ca11yndar.js -p"
   },
   "keywords": [
     "calendar",
     "datepicker",
     "date",
-    "month",
+    "picker",
     "time",
     "vanilla",
     "js"

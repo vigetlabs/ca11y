@@ -4,10 +4,10 @@ import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
 import styles   from './lib/styles'
 
-class DatePicker {
+class Ca11yndar {
   constructor(el, options = {}) {
-    DatePicker.pickers.push(this)
-    this.props = Object.assign({}, defaults, options, {id: DatePicker.pickers.length })
+    Ca11yndar.pickers.push(this)
+    this.props = Object.assign({}, defaults, options, {id: Ca11yndar.pickers.length })
     this.setInitialState()
     this.setUI(el)
     this.selectDay(this.state.day)
@@ -45,9 +45,9 @@ class DatePicker {
   }
 
   listen() {
-    delegate(this.ui.calendar, '.calendar__next', 'click', this.incrementMonth.bind(this,  1))
-    delegate(this.ui.calendar, '.calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
-    delegate(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this))
+    delegate(this.ui.calendar, '.ca11yndar__next', 'click', this.incrementMonth.bind(this,  1))
+    delegate(this.ui.calendar, '.ca11yndar__prev', 'click', this.incrementMonth.bind(this,  -1))
+    delegate(this.ui.calendarDays, '.ca11yndar__day', 'click', this.onDayClick.bind(this))
     delegate(this.ui.calendar, 'button', 'blur', this.close.bind(this), true)
     delegate(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true)
     this.ui.wrapper.addEventListener('keydown', this.onKeydown.bind(this))
@@ -62,7 +62,7 @@ class DatePicker {
   }
 
   setUI(el) {
-    const calendarId = `date-picker-${this.props.id}__calendar`
+    const calendarId = `ca11yndar-${this.props.id}__picker`
 
     this.ui = {
       input: el,
@@ -70,32 +70,32 @@ class DatePicker {
       datePicker: document.createElement('div')
     }
 
-    this.ui.datePicker.className = 'date-picker'
-    this.ui.datePicker.id = `date-picker-${this.props.id}`
+    this.ui.datePicker.className = 'ca11yndar'
+    this.ui.datePicker.id = `ca11yndar-${this.props.id}`
     this.ui.datePicker.innerHTML = `
-        <button type="button" class="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}">Toggle Date Picker</button>
-        <div class="date-picker__calendar" id="${calendarId}" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">
-          <button class="calendar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
-          <button class="calendar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
-          <p class="calendar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
-          <table>
-            <caption class="date-picker__caption" style="${styles.visuallyHidden}"></caption>
-            <thead class="datepicker__day-names">
-              <tr>
-                ${this.renderDayNames()}
-              </tr>
-            </thead>
-            <tbody class="datepicker__calendar">
-            </tbody>
-          </table>
-        </div>
+      <button type="button" class="ca11yndar__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}">Toggle Date Picker</button>
+      <div class="ca11yndar__picker" id="${calendarId}" aria-labelledby="ca11yndar__header" aria-dialog="true" aria-hidden="true" style="display: none">
+        <button class="ca11yndar__prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
+        <button class="ca11yndar__next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
+        <p class="ca11yndar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
+        <table>
+          <caption class="ca11yndar__caption" style="${styles.visuallyHidden}"></caption>
+          <thead class="datepicker__day-names">
+            <tr>
+              ${this.renderDayNames()}
+            </tr>
+          </thead>
+          <tbody class="ca11yndar__days">
+          </tbody>
+        </table>
+      </div>
     `.trim()
 
     this.ui.calendar     = this.ui.datePicker.querySelector(`#${calendarId}`)
-    this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar')
-    this.ui.monthCaption = this.ui.datePicker.querySelector('.date-picker__caption')
-    this.ui.monthHeader  = this.ui.datePicker.querySelector('.calendar__header')
-    this.ui.toggle       = this.ui.datePicker.querySelector('.date-picker__toggle')
+    this.ui.calendarDays = this.ui.datePicker.querySelector('.ca11yndar__days')
+    this.ui.monthCaption = this.ui.datePicker.querySelector('.ca11yndar__caption')
+    this.ui.monthHeader  = this.ui.datePicker.querySelector('.ca11yndar__header')
+    this.ui.toggle       = this.ui.datePicker.querySelector('.ca11yndar__toggle')
 
     this.ui.wrapper.appendChild(this.ui.datePicker)
   }
@@ -198,7 +198,7 @@ class DatePicker {
       const cells = row.map((day) => {
         const todayClass = this.isToday(day) ? ' -today' : ''
         const selectedClass = this.state.day === day ? ' -selected' : ''
-        const data = day ? ` class="calendar__day${todayClass}${selectedClass}" data-day="${day}"` : ''
+        const data = day ? ` class="ca11yndar__day${todayClass}${selectedClass}" data-day="${day}"` : ''
         const contents = day ? `<button type="button" aria-label="The ${this.props.dayTitles[day - 1]}">${day}</button>` : ''
         return `<td${data}>${contents}</td>`
       }).join('')
@@ -221,11 +221,11 @@ class DatePicker {
   render() {
     this.ui.monthHeader.innerHTML = this.renderMonthHeader()
     this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
-    this.ui.calendarPage.innerHTML = this.renderRows()
-    this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button')
+    this.ui.calendarDays.innerHTML = this.renderRows()
+    this.ui.selectedDay = this.ui.calendar.querySelector('.ca11yndar__day.-selected button')
   }
 }
 
-DatePicker.pickers = []
+Ca11yndar.pickers = []
 
-export default DatePicker
+export default Ca11yndar

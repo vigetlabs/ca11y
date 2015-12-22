@@ -1,1 +1,1 @@
-window.DatePicker = require('./DatePicker')
+window.Ca11yndar = require('./ca11yndar')

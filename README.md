@@ -1,22 +1,19 @@
-\# DatePicker
+# ca11yndar
+An accessible, light-weight, dependency-free date picker `< 4kb` minified. Bring your own styles. This is a work in progress!
 
-Barebones vanilla js (es6) date picker. This is a work in progress!
-
-## Demo Locally
 ```
-npm install
-npm start
+npm install ca11yndar --save 
 ```
 
 ## Usage
 ```
-import DatePicker from './DatePicker'
-const datePicker = new DatePicker(input)
+import Ca11yndar from 'ca11yndar'
+const datePicker = new Ca11yndar(input)
 ```
 
-Pass an input element into a new instance of `DatePicker`
+Pass an input element into a new instance of `Ca11yndar`
 
-Optionally pass in custom options for month and day names as second param.
+Optionally pass in custom options for month, day, and button labels names as second param.
 
 The following are the default values:
 ```
@@ -89,3 +86,13 @@ The following are the default values:
 ```
 
 `fullName` is what gets read by screen readers, and will be used if `displayName` is not provided.
+
+## Demo Locally
+```
+npm install
+npm start
+```
+
+--
+
+**Check out other open source work happening at [Viget](http://viget.com) on [code.viget.com](http://code.viget.com)**

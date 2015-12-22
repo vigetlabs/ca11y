@@ -8,22 +8,26 @@
       body {
         font-family: sans-serif;
       }
-      .date-picker {
+      .ca11yndar {
         display: inline-block;
         position: relative;
+        text-align: center;
       }
-      .date-picker__calendar {
+      .ca11yndar__picker {
         position: absolute;
         top: 100%;
-        right: 0
+        right: 0;
+        border: 1px solid grey;
+        background-color: #fff;
+        z-index: 10;
       }
-      .calendar__day.-today {
+      .ca11yndar__day.-today {
         background-color: lightblue
       }
-      .calendar__day.-selected {
+      .ca11yndar__day.-selected {
         background-color: blue
       }
-      .date-picker__toggle {
+      .ca11yndar__toggle {
         display: inline-block;
       }
       form > div {
@@ -43,7 +47,7 @@
       </div>
       <div>
         <label for="date-input">Date</label>
-        <input type="text" id="date-input" data-module="DatePicker">
+        <input type="text" id="date-input" data-module="ca11yndar">
       </div>
       <div>
         <label for="bar">More Text</label>
@@ -51,9 +55,9 @@
       </div>
       <div>
         <label for="date-input">Another Date</label>
-        <input type="text" id="date-input" data-module="DatePicker">
+        <input type="text" id="date-input" data-module="ca11yndar">
       </div>
     </form>
-    <script src="dist/demo.js"></script>
+    <script src="example/demo.js"></script>
   </body>
 </html>

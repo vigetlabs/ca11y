@@ -46,14 +46,17 @@
 
 	'use strict';
 
-	var _DatePicker = __webpack_require__(1);
+	var _ca11yndar = __webpack_require__(1);
 
-	var _DatePicker2 = _interopRequireDefault(_DatePicker);
+	var _ca11yndar2 = _interopRequireDefault(_ca11yndar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var input = document.getElementById('date-input');
-	var datePicker = new _DatePicker2.default(input);
+	var datePickers = Array.from(document.querySelectorAll('[data-module=ca11yndar]') || 0);
+
+	datePickers.forEach(function (input) {
+	  return new _ca11yndar2.default(input);
+	});
 
 /***/ },
 /* 1 */
@@ -93,21 +96,21 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var DatePicker = (function () {
-	  function DatePicker(el) {
+	var Ca11yndar = (function () {
+	  function Ca11yndar(el) {
 	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-	    _classCallCheck(this, DatePicker);
+	    _classCallCheck(this, Ca11yndar);
 
-	    DatePicker.pickers.push(this);
-	    this.props = _extends({}, _defaults2.default, options);
+	    Ca11yndar.pickers.push(this);
+	    this.props = _extends({}, _defaults2.default, options, { id: Ca11yndar.pickers.length });
 	    this.setInitialState();
 	    this.setUI(el);
 	    this.selectDay(this.state.day);
 	    this.listen();
 	  }
 
-	  _createClass(DatePicker, [{
+	  _createClass(Ca11yndar, [{
 	    key: 'setInitialState',
 	    value: function setInitialState() {
 	      var today = new Date();
@@ -142,9 +145,9 @@
 	  }, {
 	    key: 'listen',
 	    value: function listen() {
-	      (0, _delegate2.default)(this.ui.calendar, '#calendar__next', 'click', this.incrementMonth.bind(this, 1));
-	      (0, _delegate2.default)(this.ui.calendar, '#calendar__prev', 'click', this.incrementMonth.bind(this, -1));
-	      (0, _delegate2.default)(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this));
+	      (0, _delegate2.default)(this.ui.calendar, '.ca11yndar__next', 'click', this.incrementMonth.bind(this, 1));
+	      (0, _delegate2.default)(this.ui.calendar, '.ca11yndar__prev', 'click', this.incrementMonth.bind(this, -1));
+	      (0, _delegate2.default)(this.ui.calendarDays, '.ca11yndar__day', 'click', this.onDayClick.bind(this));
 	      (0, _delegate2.default)(this.ui.calendar, 'button', 'blur', this.close.bind(this), true);
 	      (0, _delegate2.default)(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true);
 	      this.ui.wrapper.addEventListener('keydown', this.onKeydown.bind(this));
@@ -161,19 +164,24 @@
 	  }, {
 	    key: 'setUI',
 	    value: function setUI(el) {
+	      var calendarId = 'ca11yndar-' + this.props.id + '__picker';
+
 	      this.ui = {
 	        input: el,
 	        wrapper: el.parentElement,
 	        datePicker: document.createElement('div')
 	      };
 
-	      this.ui.datePicker.className = 'date-picker';
-	      this.ui.datePicker.innerHTML = ('\n        <button type="button" id="date-picker__toggle" aria-label="Toggle Date Picker" aria-controls="date-picker__calendar">Toggle Date Picker</button>\n\n        <div id="date-picker__calendar-' + DatePicker.pickers.length + '" aria-labelledby="calendar__header" aria-dialog="true" aria-hidden="true" style="display: none">\n          <button id="calendar__prev" type="button" aria-label="' + this.props.prev.label + '">' + this.props.prev.html + '</button>\n          <button id="calendar__next" type="button" aria-label="' + this.props.next.label + '">' + this.props.next.html + '</button>\n          <p id="calendar__header" role="heading" aria-live="assertive">' + this.renderMonthHeader() + '</p>\n          <table>\n            <caption id="date-picker__caption" style="' + _styles2.default.visuallyHidden + '"></caption>\n            <thead class="datepicker__day-names">\n              <tr>\n                ' + this.renderDayNames() + '\n              </tr>\n            </thead>\n            <tbody class="datepicker__calendar">\n            </tbody>\n          </table>\n        </div>\n    ').trim();
-	      this.ui.toggle = this.ui.datePicker.querySelector('#date-picker__toggle');
-	      this.ui.calendar = this.ui.datePicker.querySelector('#date-picker__calendar');
-	      this.ui.monthCaption = this.ui.datePicker.querySelector('#date-picker__caption');
-	      this.ui.monthHeader = this.ui.datePicker.querySelector('#calendar__header');
-	      this.ui.calendarPage = this.ui.datePicker.querySelector('.datepicker__calendar');
+	      this.ui.datePicker.className = 'ca11yndar';
+	      this.ui.datePicker.id = 'ca11yndar-' + this.props.id;
+	      this.ui.datePicker.innerHTML = ('\n      <button type="button" class="ca11yndar__toggle" aria-label="Toggle Date Picker" aria-controls="' + calendarId + '">Toggle Date Picker</button>\n      <div class="ca11yndar__picker" id="' + calendarId + '" aria-labelledby="ca11yndar__header" aria-dialog="true" aria-hidden="true" style="display: none">\n        <button class="ca11yndar__prev" type="button" aria-label="' + this.props.prev.label + '">' + this.props.prev.html + '</button>\n        <button class="ca11yndar__next" type="button" aria-label="' + this.props.next.label + '">' + this.props.next.html + '</button>\n        <p class="ca11yndar__header" role="heading" aria-live="assertive">' + this.renderMonthHeader() + '</p>\n        <table>\n          <caption class="ca11yndar__caption" style="' + _styles2.default.visuallyHidden + '"></caption>\n          <thead class="datepicker__day-names">\n            <tr>\n              ' + this.renderDayNames() + '\n            </tr>\n          </thead>\n          <tbody class="ca11yndar__days">\n          </tbody>\n        </table>\n      </div>\n    ').trim();
+
+	      this.ui.calendar = this.ui.datePicker.querySelector('#' + calendarId);
+	      this.ui.calendarDays = this.ui.datePicker.querySelector('.ca11yndar__days');
+	      this.ui.monthCaption = this.ui.datePicker.querySelector('.ca11yndar__caption');
+	      this.ui.monthHeader = this.ui.datePicker.querySelector('.ca11yndar__header');
+	      this.ui.toggle = this.ui.datePicker.querySelector('.ca11yndar__toggle');
+
 	      this.ui.wrapper.appendChild(this.ui.datePicker);
 	    }
 	  }, {
@@ -229,6 +237,9 @@
 	        this.close();
 	      }
 	    }
+
+	    // Helpers
+
 	  }, {
 	    key: 'incrementMonth',
 	    value: function incrementMonth(delta) {
@@ -268,6 +279,9 @@
 
 	      return currentDay === day && this.state.month === month && this.state.fullYear === fullYear;
 	    }
+
+	    // Rendering
+
 	  }, {
 	    key: 'getGrid',
 	    value: function getGrid() {
@@ -297,7 +311,7 @@
 	        var cells = row.map(function (day) {
 	          var todayClass = _this2.isToday(day) ? ' -today' : '';
 	          var selectedClass = _this2.state.day === day ? ' -selected' : '';
-	          var data = day ? ' class="calendar__day' + todayClass + selectedClass + '" data-day="' + day + '"' : '';
+	          var data = day ? ' class="ca11yndar__day' + todayClass + selectedClass + '" data-day="' + day + '"' : '';
 	          var contents = day ? '<button type="button" aria-label="The ' + _this2.props.dayTitles[day - 1] + '">' + day + '</button>' : '';
 	          return '<td' + data + '>' + contents + '</td>';
 	        }).join('');
@@ -323,17 +337,17 @@
 	    value: function render() {
 	      this.ui.monthHeader.innerHTML = this.renderMonthHeader();
 	      this.ui.monthCaption.textContent = this.state.monthNameFull + ' ' + this.state.fullYear;
-	      this.ui.calendarPage.innerHTML = this.renderRows();
-	      this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button');
+	      this.ui.calendarDays.innerHTML = this.renderRows();
+	      this.ui.selectedDay = this.ui.calendar.querySelector('.ca11yndar__day.-selected button');
 	    }
 	  }]);
 
-	  return DatePicker;
+	  return Ca11yndar;
 	})();
 
-	DatePicker.pickers = [];
+	Ca11yndar.pickers = [];
 
-	exports.default = DatePicker;
+	exports.default = Ca11yndar;
 
 /***/ },
 /* 2 */
