@@ -5,7 +5,7 @@ module.exports = {
     demo: "./demo"
   },
   output: {
-    path: __dirname + "/dist",
+    path: __dirname + "/example",
     filename: "[name].js"
   },
   module: {
