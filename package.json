@@ -1,11 +1,11 @@
 {
-  "name": "ca11yndar",
+  "name": "ca11y",
   "version": "0.0.1",
   "description": "A lightweight accessible datepicker",
-  "homepage": "http://code.viget.com/ca11yndar/",
+  "homepage": "http://code.viget.com/ca11y/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/vigetlabs/ca11yndar.git"
+    "url": "git://github.com/vigetlabs/ca11y.git"
   },
   "main": "dist/index.js",
   "scripts": {
