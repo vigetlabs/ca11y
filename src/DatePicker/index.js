@@ -8,7 +8,7 @@ import template from './lib/template'
 class DatePicker {
   constructor(el, options = {}) {
     DatePicker.pickers.push(this)
-    this.props = Object.assign({}, defaults, options, {id: DatePicker.pickers.length })
+    this.props = Object.assign({}, defaults, options, { id: DatePicker.pickers.length })
     this.setInitialState()
     this.setUI(el)
     this.selectDay(this.state.day)
@@ -17,58 +17,62 @@ class DatePicker {
 
   setInitialState() {
     const today = new Date()
+
     this.state = {
       today: {
-        fullYear: today.getFullYear(),
-        day: today.getDate(),
-        month: today.getMonth()
+        fullYear : today.getFullYear(),
+        day      : today.getDate(),
+        month    : today.getMonth()
       }
     }
+
     this.setDate(today, true)
   }
 
   setDate(date, silent) {
-    const month = date.getMonth()
-    const day = date.getDate()
-    const year = date.getFullYear()
+    const month     = date.getMonth()
+    const day       = date.getDate()
+    const year      = date.getFullYear()
     const monthName = this.props.months[month].displayName || this.props.months[month].fullName
+
     this.setState({
-      date: date,
-      day: day,
-      monthName: monthName,
-      monthNameFull: this.props.months[month].fullName,
-      month: month,
-      monthDisplay: month + 1,
-      fullYear: date.getFullYear(),
-      totalDays: this.getDays(year, month),
-      firstWeekdayValue: this.getFirstDay(year, month)
+      date              : date,
+      day               : day,
+      monthName         : monthName,
+      monthNameFull     : this.props.months[month].fullName,
+      month             : month,
+      monthDisplay      : month + 1,
+      fullYear          : date.getFullYear(),
+      totalDays         : this.getDays(year, month),
+      firstWeekdayValue : this.getFirstDay(year, month)
     }, silent)
   }
 
   listen() {
     delegate(this.ui.calendar, '.calendar__next', 'click', this.incrementMonth.bind(this,  1))
     delegate(this.ui.calendar, '.calendar__prev', 'click', this.incrementMonth.bind(this,  -1))
-    delegate(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this))
     delegate(this.ui.calendar, 'button', 'blur', this.close.bind(this), true)
     delegate(this.ui.calendar, 'button', 'focus', this.cancelClose.bind(this), true)
-    this.ui.wrapper.addEventListener('keydown', this.onKeydown.bind(this))
+    delegate(this.ui.calendarPage, '.calendar__day', 'click', this.onDayClick.bind(this))
+
+    this.ui.wrapper.addEventListener('keydown', this.onKeyDown.bind(this))
     this.ui.toggle.addEventListener('click', this.toggle.bind(this))
     this.ui.toggle.addEventListener('focus', this.cancelClose.bind(this))
   }
 
-  onKeydown(e) {
+  onKeyDown(e) {
     if(e.keyCode === keys.esc) {
       this.close()
     }
   }
 
   setUI(el) {
-    const calendarId = `date-picker-${this.props.id}__calendar`
+    const calendarId = `date-picker-${ this.props.id }__calendar`
 
     this.ui = {
-      input: el,
-      wrapper: el.parentElement,
-      datePicker: document.createElement('div')
+      input      : el,
+      wrapper    : el.parentElement,
+      datePicker : document.createElement('div')
     }
 
     this.ui.datePicker.className = 'date-picker'
@@ -92,7 +96,10 @@ class DatePicker {
 
   setState(state, silent) {
     this.state = Object.assign({}, this.state, state)
-    if(!silent) this.render()
+
+    if (!silent) {
+      this.render()
+    }
   }
 
   toggle() {
@@ -122,35 +129,42 @@ class DatePicker {
   }
 
   onDayClick(e) {
-    const day = Number(e.target.textContent)
-    this.selectDay(day)
+    this.selectDay(Number(e.target.textContent))
   }
 
   selectDay(day, keepOpen) {
-    this.ui.input.value = `${zeroPad(this.state.monthDisplay)}/${zeroPad(day)}/${this.state.fullYear}`
-    this.setState({day})
+    this.ui.input.value = this.getInputValue(day)
+    this.setState({ day })
+
     if(!keepOpen) {
       this.close()
     }
   }
 
-  // Helpers
   incrementMonth(delta) {
     let month = this.state.month + delta
-    let year = this.state.fullYear
+    let year  = this.state.fullYear
 
-    if(month > 11) {
+    if (month > 11) {
       month = 0
       year += delta
     }
 
-    if(month < 0) {
+    if (month < 0) {
       month = 11
       year += delta
     }
 
-    const date = new Date(year, month, 1)
-    this.setDate(date)
+    this.setDate(new Date(year, month, 1))
+  }
+
+  isToday(currentDay) {
+    const { day, month, fullYear } = this.state.today
+    return (currentDay === day && this.state.month === month && this.state.fullYear === fullYear)
+  }
+
+  getInputValue(day) {
+    return `${ zeroPad(this.state.monthDisplay) }/${ zeroPad(day) }/${ this.state.fullYear }`
   }
 
   getDays(year, month) {
@@ -161,12 +175,6 @@ class DatePicker {
     return new Date(year, month, 1).getDay()
   }
 
-  isToday(currentDay) {
-    const {day, month, fullYear} = this.state.today
-    return currentDay === day && this.state.month === month && this.state.fullYear === fullYear
-  }
-
-  // Rendering
   getGrid() {
     const { firstWeekdayValue, totalDays } = this.state
     const grid = [[], [], [], [], [], []]
@@ -175,44 +183,72 @@ class DatePicker {
     for (let i = 1; i <= 42; i++) {
       let isEmpty = (i - 1 >= firstWeekdayValue) && (i <= totalDays + firstWeekdayValue)
       let day = isEmpty ? (i - firstWeekdayValue) : ''
+
       grid[rowIndex].push(day)
-      if(i % 7 === 0) rowIndex++
+
+      if (i % 7 === 0) {
+        rowIndex++
+      }
     }
 
     return grid
   }
 
-  renderRows() {
-    return this.getGrid().reduce((string, row) => {
+  getCellData(day) {
+    if (!day) {
+      return ''
+    }
 
-      const cells = row.map((day) => {
-        const todayClass = this.isToday(day) ? ' -today' : ''
-        const selectedClass = this.state.day === day ? ' -selected' : ''
-        const data = day ? ` class="calendar__day${todayClass}${selectedClass}" data-day="${day}"` : ''
-        const contents = day ? `<button type="button" aria-label="The ${this.props.dayTitles[day - 1]}">${day}</button>` : ''
-        return `<td${data}>${contents}</td>`
+    const todayClass    = (this.isToday(day) ? ' -today' : '')
+    const selectedClass = (this.state.day === day ? ' -selected' : '')
+
+    return ` class="calendar__day${ todayClass }${ selectedClass }" data-day="${ day }"`
+  }
+
+  getCellContents(day) {
+    if (!day) {
+      return ''
+    }
+
+    return `<button type="button" aria-label="The ${ this.props.dayTitles[day - 1] }">${ day }</button>`
+  }
+
+  renderRows() {
+    return this.getGrid().reduce((result, row) => {
+      const cells = row.map(day => {
+        const data     = this.getCellData(day)
+        const contents = this.getCellContents(day)
+
+        return `<td${ data }>${ contents }</td>`
       }).join('')
 
-      return string += `<tr>${cells}</tr>`
+      return result += `<tr>${ cells }</tr>`
     }, '')
   }
 
   renderDayNames() {
-    return this.props.days.reduce((string, day) => {
-      string += `<th scope="col" aria-label="${day.fullName}">${day.displayName || day.fullName}</th>`
-      return string
+    return this.props.days.reduce((result, day) => {
+      return result + `
+        <th scope="col" aria-label="${ day.fullName }">
+          ${ day.displayName || day.fullName }
+        </th>
+      `.trim()
     }, '')
   }
 
   renderMonthHeader() {
-    return `<span style="${styles.visuallyHidden}">${this.state.monthNameFull}</span> <span aria-hidden="true">${this.state.monthName}</span> ${this.state.fullYear}`
+    return `
+      <span style="${ styles.visuallyHidden }">${ this.state.monthNameFull }</span>
+      <span aria-hidden="true">${ this.state.monthName }</span>
+      ${ this.state.fullYear }
+    `.trim()
   }
 
   render() {
-    this.ui.monthHeader.innerHTML = this.renderMonthHeader()
-    this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
-    this.ui.calendarPage.innerHTML = this.renderRows()
-    this.ui.selectedDay = this.ui.calendar.querySelector('.calendar__day.-selected button')
+    this.ui.monthHeader.innerHTML    = this.renderMonthHeader()
+    this.ui.monthCaption.textContent = `${ this.state.monthNameFull } ${ this.state.fullYear }`
+    this.ui.calendarPage.innerHTML   = this.renderRows()
+    this.ui.selectedDay              = this.ui.calendar.querySelector('.calendar__day.-selected button')
   }
 }
 
