@@ -1,23 +1,29 @@
-# ca11yndar
-An accessible, light-weight, dependency-free date picker `< 4kb` minified. Bring your own styles. This is a work in progress!
+**NOTE: This is a work in progress in early development! Issues and pull requests welcome.**
+
+# ca11y
+An accessible, light-weight, dependency-free date picker `< 4kb` minified. Bring your own styles.
 
 ```
-npm install ca11yndar --save 
+npm install ca11y --save 
 ```
 
 ## Usage
+**es6**
 ```
-import Ca11yndar from 'ca11yndar'
-const datePicker = new Ca11yndar(input)
+import Ca11y from 'ca11y'
+const datePicker = new Ca11y(input, options)
 ```
 
-Pass an input element into a new instance of `Ca11yndar`
+**es5**
+```
+var Ca11y = require('ca11y') 
+var datePicker = new Ca11y(input, options)
+```
 
-Optionally pass in custom options for month, day, and button labels names as second param.
-
-The following are the default values:
+Pass an input element into a new instance of `Ca11yndar`, and optionally pass in props to override the following defaults:
 ```
 {
+  transitionDuration: 0,
   months: [
     { fullName: 'January'   , displayName: 'Jan' }  ,
     { fullName: 'February'  , displayName: 'Feb' }  ,
@@ -85,7 +91,7 @@ The following are the default values:
 }
 ```
 
-`fullName` is what gets read by screen readers, and will be used if `displayName` is not provided.
+`fullName` and `label` values are read by screen readers. Provide `transitionDuration` if you are using the css `transition` property on the `.ca11y__picker` element to allow auto-focusing of the selected day on transition end.
 
 ## Demo Locally
 ```
@@ -96,3 +102,8 @@ npm start
 --
 
 **Check out other open source work happening at [Viget](http://viget.com) on [code.viget.com](http://code.viget.com)**
+
+## Deploy to GitHub Pages
+```
+npm run deploy
+```

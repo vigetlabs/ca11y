@@ -13,7 +13,7 @@
     "start": "webpack & npm run sass && npm run watch",
     "sass": "node-sass src/demo.sass example/demo.css -i",
     "watch": "node-sass src/demo.sass example/demo.css -i -w & webpack --watch & browser-sync start --server example --files 'example/*, index.html'",
-    "prepublish": "rm -rf example dist && babel src/ca11yndar -d dist & webpack src/standalone.js dist/window.ca11yndar.js -p"
+    "prepublish": "rm -rf dist && babel src/ca11yndar -d dist & webpack src/standalone.js dist/window.ca11yndar.js -p"
   },
   "keywords": [
     "calendar",
