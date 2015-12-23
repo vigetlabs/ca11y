@@ -1,13 +1,4 @@
 module.exports = {
-  context: __dirname + "/src",
-  debug: 'source-map',
-  entry: {
-    demo: "./demo"
-  },
-  output: {
-    path: __dirname + "/example",
-    filename: "[name].js"
-  },
   module: {
     loaders: [
       {

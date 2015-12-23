@@ -1,7 +1,7 @@
-**NOTE: This is a work in progress in early development! Issues and pull requests welcome.**
+**NOTE:** This is a work in progress in early development! Not quite ready for prime-time. [Issues](https://github.com/vigetlabs/ca11y/issues) and [pull requests](https://github.com/vigetlabs/ca11y/pulls) welcome.
 
 # ca11y
-An accessible, light-weight, dependency-free date picker `< 4kb` minified. Bring your own styles.
+An accessible, light-weight, dependency-free date picker `< 5kb` gzipped. Bring your own styles.
 
 ```
 npm install ca11y --save 
@@ -20,7 +20,7 @@ var Ca11y = require('ca11y')
 var datePicker = new Ca11y(input, options)
 ```
 
-Pass an input element into a new instance of `Ca11yndar`, and optionally pass in props to override the following defaults:
+Pass an input element into a new instance of `Ca11y`, and optionally pass in props to override the following defaults:
 ```
 {
   transitionDuration: 0,

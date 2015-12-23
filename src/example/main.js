@@ -1,0 +1,1 @@
+!function(n){function o(t){if(r[t])return r[t].exports;var e=r[t]={exports:{},id:t,loaded:!1};return n[t].call(e.exports,e,e.exports,o),e.loaded=!0,e.exports}var r={};return o.m=n,o.c=r,o.p="",o(0)}([function(n,o,r){!function(){throw new Error('Cannot find module "src/standalone"')}(),function(){throw new Error('Cannot find module "dist/window.ca11y"')}()}]);
