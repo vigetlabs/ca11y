@@ -1,5 +1,7 @@
 export default {
-  months:[
+  // If animating open the picker, specify the transitionDuration
+  transitionDuration: 200,
+  months: [
     { fullName: 'January'   , displayName: 'Jan' } ,
     { fullName: 'February'  , displayName: 'Feb' } ,
     { fullName: 'March'     , displayName: 'Mar' } ,

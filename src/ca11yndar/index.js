@@ -55,6 +55,16 @@ class Ca11yndar {
     this.ui.toggle.addEventListener('focus', this.cancelClose.bind(this))
   }
 
+  focusSelectedDay() {
+    // You can't focus() an element during a transition,
+    // and the `transtionend` event is a bubbling nightmare,
+    // so we're relying on a manually defined transitionDuration
+    clearTimeout(this.transitionTimeout)
+    this.transitionTimeout = setTimeout(() => {
+      this.ui.selectedDay.focus()
+    }, this.props.transitionDuration)
+  }
+
   onKeydown(e) {
     if(e.keyCode === keys.esc) {
       this.close()
@@ -73,9 +83,9 @@ class Ca11yndar {
   open() {
     clearTimeout(this.closeTimeout)
     this.ui.calendar.removeAttribute('aria-hidden')
-    this.ui.selectedDay.focus()
     this.ui.monthHeader.innerHTML = this.renderMonthHeader()
     this.state.isOpen = true
+    this.focusSelectedDay()
   }
 
   cancelClose() {
@@ -87,6 +97,7 @@ class Ca11yndar {
       !silent && this.ui.toggle.focus()
       this.ui.calendar.setAttribute('aria-hidden', true)
       this.state.isOpen = false
+      clearTimeout(this.transitionTimeout)
     }, 100)
   }
 
@@ -216,7 +227,7 @@ class Ca11yndar {
     this.ui.monthCaption = this.ui.datePicker.querySelector('.ca11yndar__caption')
     this.ui.monthHeader  = this.ui.datePicker.querySelector('.ca11yndar__header')
     this.ui.toggle       = this.ui.datePicker.querySelector('.ca11yndar__toggle')
-
+    this.ui.picker       = this.ui.datePicker.querySelector('.ca11yndar__picker')
     this.ui.wrapper.appendChild(this.ui.datePicker)
   }
 
