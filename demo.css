@@ -151,7 +151,6 @@ form {
 
 .ca11yndar__picker {
   background-color: #fff;
-  background-image: linear-gradient(15deg, #fff, 90%, rgba(234, 66, 173, 0.05));
   border-radius: 3px;
   border: 1px solid #ebebeb;
   box-shadow: 2px 4px 0px rgba(0, 0, 0, 0.02);
@@ -166,12 +165,6 @@ form {
   top: 100%;
   transition: all .2s ease-in-out;
   z-index: 1; }
-  .ca11yndar__picker * {
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -o-user-select: none;
-    -webkit-user-select: none;
-    user-select: none; }
   .ca11yndar__picker[aria-hidden="true"] {
     opacity: 0;
     transform-origin: 100% 0%;
