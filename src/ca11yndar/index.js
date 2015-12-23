@@ -174,7 +174,7 @@ class Ca11yndar {
           const selectedClass = this.state.day === day ? ' -selected' : ''
           contents = `<button type="button" class="ca11yndar__day${todayClass}${selectedClass}" data-day="${day}" aria-label="The ${this.props.dayTitles[day - 1]}">${day}</button>`
         }
-        return `<td class="ca11yndar__cell ${!day && ' -empty'}"${!day && ' aria-hidden="true"'}>${contents}</td>`
+        return `<td class="ca11yndar__cell${day ? '' : ' -empty'}"${day ? '' : ' aria-hidden="true"'}>${contents}</td>`
       }).join('')
 
       return string += `<tr class="ca11yndar__row">${cells}</tr>`
