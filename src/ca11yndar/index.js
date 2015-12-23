@@ -205,7 +205,7 @@ class Ca11yndar {
     this.ui.datePicker.id = `ca11yndar-${this.props.id}`
     this.ui.datePicker.innerHTML = `
       <button type="button" class="ca11yndar__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}" aria-label="${this.props.toggle.label}">${this.props.toggle.html}</button>
-      <div class="ca11yndar__picker" id="${calendarId}" aria-labelledby="ca11yndar__header" aria-dialog="true" aria-hidden="true">
+      <div class="ca11yndar__picker" id="${calendarId}" aria-labelledby="ca11yndar__header" role="dialog" aria-hidden="true">
         <button class="ca11yndar__nav -prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
         <button class="ca11yndar__nav -next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
         <p class="ca11yndar__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
