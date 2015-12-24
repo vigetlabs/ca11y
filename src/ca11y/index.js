@@ -3,6 +3,7 @@ import defaults from './lib/defaults'
 import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
 import styles   from './lib/styles'
+import template from './lib/template'
 
 class Ca11y {
   constructor(el, options = {}) {
@@ -16,31 +17,34 @@ class Ca11y {
 
   setInitialState() {
     const today = new Date()
+
     this.state = {
       today: {
-        fullYear: today.getFullYear(),
-        day: today.getDate(),
-        month: today.getMonth()
+        fullYear : today.getFullYear(),
+        day      : today.getDate(),
+        month    : today.getMonth()
       }
     }
+
     this.setDate(today, true)
   }
 
   setDate(date, silent) {
-    const month = date.getMonth()
-    const day = date.getDate()
-    const year = date.getFullYear()
+    const month     = date.getMonth()
+    const day       = date.getDate()
+    const year      = date.getFullYear()
     const monthName = this.props.months[month].displayName || this.props.months[month].fullName
+
     this.setState({
-      date: date,
-      day: day,
-      monthName: monthName,
-      monthNameFull: this.props.months[month].fullName,
-      month: month,
-      monthDisplay: month + 1,
-      fullYear: date.getFullYear(),
-      totalDays: this.getDays(year, month),
-      firstWeekdayValue: this.getFirstDay(year, month)
+      date              : date,
+      day               : day,
+      monthName         : monthName,
+      monthNameFull     : this.props.months[month].fullName,
+      month             : month,
+      monthDisplay      : month + 1,
+      fullYear          : date.getFullYear(),
+      totalDays         : this.getDays(year, month),
+      firstWeekdayValue : this.getFirstDay(year, month)
     }, silent)
   }
 
@@ -164,63 +168,54 @@ class Ca11y {
     return grid
   }
 
+  getDayData(day) {
+    return {
+      day,
+      title               : this.props.dayTitles[day - 1],
+      cellEmptyClass      : (day ? '' : ' -empty'),
+      cellAriaHidden      : (day ? '' : ' aria-hidden="true"'),
+      buttonTodayClass    : (this.isToday(day) ? ' -today' : ''),
+      buttonSelectedClass : (this.state.day === day ? ' -selected' : '')
+    }
+  }
+
   renderRows() {
     return this.getGrid().reduce((string, row) => {
-
-      const cells = row.map((day) => {
-        let contents = ''
-        if(day) {
-          const todayClass = this.isToday(day) ? ' -today' : ''
-          const selectedClass = this.state.day === day ? ' -selected' : ''
-          contents = `<button type="button" class="ca11y__day${todayClass}${selectedClass}" data-day="${day}" aria-label="The ${this.props.dayTitles[day - 1]}">${day}</button>`
-        }
-        return `<td class="ca11y__cell${day ? '' : ' -empty'}"${day ? '' : ' aria-hidden="true"'}>${contents}</td>`
-      }).join('')
-
-      return string += `<tr class="ca11y__row">${cells}</tr>`
+      const cells = row.map(day => template.tableCell(this.getDayData(day))).join('')
+      return string + template.tableRow({ cells })
     }, '')
   }
 
   renderDayNames() {
-    return this.props.days.reduce((string, day) => {
-      string += `<th class="datepicker__day-name" scope="col" aria-label="${day.fullName}">${day.displayName || day.fullName}</th>`
-      return string
-    }, '')
+    return this.props.days.reduce((string, day) => string + template.tableHeader({ day }), '')
   }
 
   renderMonthHeader() {
-    return `<span style="${styles.visuallyHidden}">${this.state.monthNameFull}</span> <span aria-hidden="true" class="ca11y__month-display">${this.state.monthName}</span> <span class="ca11y__year-display">${this.state.fullYear}</span>`
+    return template.monthHeader({
+      monthNameFull : this.state.monthNameFull,
+      monthName     : this.state.monthName,
+      fullYear      : this.state.fullYear
+    })
   }
 
   setUI(el) {
-    const calendarId = `ca11y-${this.props.id}__picker`
+    const calendarId = `ca11y-${ this.props.id }__picker`
 
     this.ui = {
-      input: el,
-      wrapper: el.parentElement,
-      datePicker: document.createElement('div')
+      input      : el,
+      wrapper    : el.parentElement,
+      datePicker : document.createElement('div')
     }
 
     this.ui.datePicker.className = 'ca11y'
-    this.ui.datePicker.id = `ca11y-${this.props.id}`
-    this.ui.datePicker.innerHTML = `
-      <button type="button" class="ca11y__toggle" aria-label="Toggle Date Picker" aria-controls="${calendarId}" aria-label="${this.props.toggle.label}">${this.props.toggle.html}</button>
-      <div class="ca11y__picker" id="${calendarId}" aria-labelledby="ca11y__header" role="dialog" aria-hidden="true">
-        <button class="ca11y__nav -prev" type="button" aria-label="${this.props.prev.label}">${this.props.prev.html}</button>
-        <button class="ca11y__nav -next" type="button" aria-label="${this.props.next.label}">${this.props.next.html}</button>
-        <p class="ca11y__header" role="heading" aria-live="assertive">${this.renderMonthHeader()}</p>
-        <table class="ca11y__table">
-          <caption class="ca11y__caption" style="${styles.visuallyHidden}"></caption>
-          <thead class="ca11y__day-names">
-            <tr>
-              ${this.renderDayNames()}
-            </tr>
-          </thead>
-          <tbody class="ca11y__days">
-          </tbody>
-        </table>
-      </div>
-    `.trim()
+    this.ui.datePicker.id        = `ca11y-${ this.props.id }`
+    this.ui.datePicker.innerHTML = template.calendar(
+      Object.assign({}, this.props, {
+        calendarId,
+        monthHeader: this.renderMonthHeader(),
+        dayNames: this.renderDayNames()
+      })
+    )
 
     this.ui.calendar     = this.ui.datePicker.querySelector(`#${calendarId}`)
     this.ui.calendarDays = this.ui.datePicker.querySelector('.ca11y__days')
@@ -232,10 +227,10 @@ class Ca11y {
   }
 
   render() {
-    this.ui.monthHeader.innerHTML = this.renderMonthHeader()
+    this.ui.monthHeader.innerHTML    = this.renderMonthHeader()
     this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
-    this.ui.calendarDays.innerHTML = this.renderRows()
-    this.ui.selectedDay = this.ui.calendar.querySelector('.ca11y__day.-selected')
+    this.ui.calendarDays.innerHTML   = this.renderRows()
+    this.ui.selectedDay              = this.ui.calendar.querySelector('.ca11y__day.-selected')
   }
 }
 
