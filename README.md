@@ -80,6 +80,10 @@ Pass an input element into a new instance of `Ca11y`, and optionally pass in pro
     'Thirtieth',
     'Thirty First'
   ],
+  toggle: {
+    html: '📅',
+    label: 'Toggle Date Picker'
+  },
   next: {
     html: '>',
     label: 'Next Month'
