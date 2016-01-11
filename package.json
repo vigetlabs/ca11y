@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "description": "A lightweight accessible datepicker",
   "homepage": "http://code.viget.com/ca11y/",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "0.12.2"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/vigetlabs/ca11y.git"
   },
-  "main": "dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test karma start karma.config.js --single-run",
     "test-watch": "NODE_ENV=test karma start karma.config.js",
