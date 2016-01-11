@@ -1,4 +1,9 @@
+import parse from './parse'
+import format from './format'
+
 export default {
+  parse,
+  format,
   // If animating open the picker, specify the transitionDuration
   transitionDuration: 200,
   months: [

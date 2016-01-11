@@ -53,6 +53,7 @@
     "webpack": "1.12.9"
   },
   "dependencies": {
-    "delegate": "git://github.com/vigetlabs/delegate#3.0.1"
+    "delegate": "git://github.com/vigetlabs/delegate#3.0.1",
+    "fast-strftime": "1.1.1"
   }
 }
