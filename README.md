@@ -5,7 +5,7 @@
 An accessible, light-weight, dependency-free date picker `< 5kb` gzipped. Bring your own styles.
 
 ```
-npm install ca11y --save 
+npm install ca11y --save
 ```
 
 ## Usage
@@ -17,13 +17,14 @@ const datePicker = new Ca11y(input, options)
 
 **es5**
 ```js
-var Ca11y = require('ca11y') 
+var Ca11y = require('ca11y')
 var datePicker = new Ca11y(input, options)
 ```
 
 Pass an input element into a new instance of `Ca11y`, and optionally pass in props to override the following defaults:
 ```js
 {
+  replaceDateInput: false, // Disable Ca11y when input[type=date] is supported
   transitionDuration: 0,
   months: [
     { fullName: 'January'   , displayName: 'Jan' }  ,
