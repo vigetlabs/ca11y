@@ -10,19 +10,19 @@ npm install ca11y --save
 
 ## Usage
 **es6**
-```
+```js
 import Ca11y from 'ca11y'
 const datePicker = new Ca11y(input, options)
 ```
 
 **es5**
-```
+```js
 var Ca11y = require('ca11y') 
 var datePicker = new Ca11y(input, options)
 ```
 
 Pass an input element into a new instance of `Ca11y`, and optionally pass in props to override the following defaults:
-```
+```js
 {
   transitionDuration: 0,
   months: [
