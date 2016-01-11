@@ -52,6 +52,8 @@
     "webpack": "1.12.9"
   },
   "dependencies": {
+    "babel-core": "6.4.0",
+    "babel-polyfill": "6.3.14",
     "delegate": "git://github.com/vigetlabs/delegate#3.0.1"
   }
 }

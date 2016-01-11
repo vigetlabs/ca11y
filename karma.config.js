@@ -8,6 +8,7 @@ module.exports = function (config) {
     frameworks: [ 'mocha' ],
 
     files: [
+      './node_modules/babel-polyfill/browser.js',
       './test/**/*.test.js*',
       './test/index.html'
     ],
