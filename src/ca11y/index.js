@@ -8,11 +8,12 @@ import template from './lib/template'
 class Ca11y {
   constructor(el, options = {}) {
     Ca11y.pickers.push(this)
-    this.props = Object.assign({}, defaults, options, {id: Ca11y.pickers.length })
+    this.props = Object.assign({}, defaults, options, { id: Ca11y.pickers.length })
     this.setInitialState()
     this.setUI(el)
     this.selectDay(this.state.day, false, true)
     this.listen()
+    return this
   }
 
   setInitialState() {
@@ -70,14 +71,12 @@ class Ca11y {
   }
 
   onKeydown(e) {
-    if(e.keyCode === keys.esc) {
-      this.close()
-    }
+    if (e.keyCode === keys.esc) this.close()
   }
 
   setState(state, silent) {
     this.state = Object.assign({}, this.state, state)
-    if(!silent) this.render()
+    if (!silent) this.render()
   }
 
   toggle() {
@@ -98,7 +97,7 @@ class Ca11y {
 
   close(silent) {
     this.closeTimeout = setTimeout(() => {
-      !silent && this.ui.toggle.focus()
+      if (!silent) this.ui.toggle.focus()
       this.ui.calendar.setAttribute('aria-hidden', true)
       this.state.isOpen = false
       clearTimeout(this.transitionTimeout)
@@ -111,13 +110,11 @@ class Ca11y {
   }
 
   selectDay(day, keepOpen, silent) {
-    if(!silent) {
+    if (!silent) {
       this.ui.input.value = `${zeroPad(this.state.monthDisplay)}/${zeroPad(day)}/${this.state.fullYear}`
     }
     this.setState({day})
-    if(!keepOpen) {
-      this.close(silent)
-    }
+    if (!keepOpen) this.close(silent)
   }
 
   // Helpers
@@ -125,12 +122,12 @@ class Ca11y {
     let month = this.state.month + delta
     let year = this.state.fullYear
 
-    if(month > 11) {
+    if (month > 11) {
       month = 0
       year += delta
     }
 
-    if(month < 0) {
+    if (month < 0) {
       month = 11
       year += delta
     }
@@ -148,8 +145,13 @@ class Ca11y {
   }
 
   isToday(currentDay) {
-    const {day, month, fullYear} = this.state.today
-    return currentDay === day && this.state.month === month && this.state.fullYear === fullYear
+    const { day, month, fullYear } = this.state.today
+
+    return (
+      currentDay === day &&
+      this.state.month === month &&
+      this.state.fullYear === fullYear
+    )
   }
 
   // Rendering
@@ -162,7 +164,7 @@ class Ca11y {
       let isEmpty = (i - 1 >= firstWeekdayValue) && (i <= totalDays + firstWeekdayValue)
       let day = isEmpty ? (i - firstWeekdayValue) : ''
       grid[rowIndex].push(day)
-      if(i % 7 === 0) rowIndex++
+      if (i % 7 === 0) rowIndex++
     }
 
     return grid
@@ -212,8 +214,8 @@ class Ca11y {
     this.ui.datePicker.innerHTML = template.calendar(
       Object.assign({}, this.props, {
         calendarId,
-        monthHeader: this.renderMonthHeader(),
-        dayNames: this.renderDayNames()
+        monthHeader : this.renderMonthHeader(),
+        dayNames    : this.renderDayNames()
       })
     )
 

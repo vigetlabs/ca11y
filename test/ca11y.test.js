@@ -12,7 +12,13 @@ describe('Ca11y', () => {
 
   afterEach(() => instance = null)
 
-  it('has passing tests', () => {
-    assert.ok(true)
+  it('renders the toggle button into the document', () => {
+    const buttonNode = document.querySelectorAll('.ca11y__toggle')
+    assert.equal(buttonNode.length, 1)
+  })
+
+  it('renders the calendar into the document', () => {
+    const ca11yNode = document.querySelectorAll('.ca11y__picker')
+    assert.equal(ca11yNode.length, 1)
   })
 })
