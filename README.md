@@ -1,6 +1,7 @@
 **NOTE:** This is a work in progress in early development! Not quite ready for prime-time. [Issues](https://github.com/vigetlabs/ca11y/issues) and [pull requests](https://github.com/vigetlabs/ca11y/pulls) welcome.
 
-# ca11y
+# ca11y [![Circle CI](https://circleci.com/gh/vigetlabs/ca11y/tree/master.svg?style=svg&circle-token=f911005636ea7f7467f9e2ebf07e2ee023f7d81b)](https://circleci.com/gh/vigetlabs/ca11y/tree/master)
+
 An accessible, light-weight, dependency-free date picker `< 5kb` gzipped. Bring your own styles.
 
 ```
