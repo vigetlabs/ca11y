@@ -13,7 +13,6 @@ class Ca11y {
     this.setUI(el)
     this.selectDay(this.state.day, false, true)
     this.listen()
-    return this
   }
 
   setInitialState() {

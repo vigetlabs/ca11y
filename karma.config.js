@@ -2,7 +2,7 @@ module.exports = function (config) {
   return config.set({
     basePath: '.',
 
-    browsers: [ 'PhantomJS', 'Chrome', 'Firefox' ],
+    browsers: [ 'Chrome', 'Firefox' ],
 
     frameworks: [ 'mocha' ],
 
@@ -23,7 +23,6 @@ module.exports = function (config) {
       'karma-html2js-preprocessor',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
-      'karma-phantomjs-launcher',
       'karma-mocha-reporter',
       'karma-mocha'
     ],
