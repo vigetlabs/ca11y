@@ -1,5 +1,5 @@
 export default {
-  replaceDateInput: false, // Disable Ca11y when input[type=date] is supported
+  preferNative: true, // skip Ca11y when input[type=date] is supported
   transitionDuration: 200, // If animating open the picker, specify the transitionDuration
   months: [
     { fullName: 'January'   , displayName: 'Jan' } ,

@@ -24,7 +24,7 @@ var datePicker = new Ca11y(input, options)
 Pass an input element into a new instance of `Ca11y`, and optionally pass in props to override the following defaults:
 ```js
 {
-  replaceDateInput: false, // Disable Ca11y when input[type=date] is supported
+  preferNative: true, // skip Ca11y when input[type=date] is supported
   transitionDuration: 0,
   months: [
     { fullName: 'January'   , displayName: 'Jan' }  ,

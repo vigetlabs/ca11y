@@ -7,9 +7,10 @@ import template from './lib/template'
 
 class Ca11y {
   constructor(el, options = {}) {
-    if (this.shouldConstruct(el, options)) {
+    const props = Object.assign({}, defaults, options)
+    if (this.shouldConstruct(el, props)) {
       Ca11y.pickers.push(this)
-      this.props = Object.assign({}, defaults, options, { id: Ca11y.pickers.length })
+      this.props = Object.assign({}, props, { id: Ca11y.pickers.length })
       this.setInitialState()
       this.setUI(el)
       this.selectDay(this.state.day, false, true)
@@ -19,11 +20,11 @@ class Ca11y {
     }
   }
 
-  shouldConstruct(el, options) {
-    return options.replaceDateInput !== true && !this.isDateInput(el)
+  shouldConstruct(el, props) {
+    return props.preferNative === false || !this.isDateInputSupported(el)
   }
 
-  isDateInput(el) {
+  isDateInputSupported(el) {
     let input = document.createElement('input')
     input.setAttribute('type', 'date')
     let isDate = input.type !== 'text' && 'style' in input
