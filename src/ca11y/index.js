@@ -202,10 +202,11 @@ class Ca11y {
 
   setUI(el) {
     const calendarId = `ca11y-${ this.props.id }__picker`
+    const input = typeof el === 'string' ? document.querySelector(el) : el
 
     this.ui = {
-      input      : el,
-      wrapper    : el.parentElement,
+      input      : input,
+      wrapper    : input.parentElement,
       datePicker : document.createElement('div')
     }
 
@@ -234,6 +235,11 @@ class Ca11y {
     this.ui.calendarDays.innerHTML   = this.renderRows()
     this.ui.selectedDay              = this.ui.calendar.querySelector('.ca11y__day.-selected')
   }
+}
+
+Ca11y.init = function(selector, options) {
+  const datePickers = Array.from(document.querySelectorAll(selector) || 0)
+  return datePickers.map((input) => new Ca11y(input, options))
 }
 
 Ca11y.pickers = []
