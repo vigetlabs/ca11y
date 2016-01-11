@@ -6,7 +6,7 @@
 An accessible, light-weight, dependency-free date picker `< 5kb` gzipped. Bring your own styles.
 
 ```
-npm install ca11y --save 
+npm install ca11y --save
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ const datePicker = new Ca11y(input, options)
 
 **es5**
 ```js
-var Ca11y = require('ca11y') 
+var Ca11y = require('ca11y')
 var datePicker = new Ca11y(input, options)
 ```
 
@@ -98,6 +98,25 @@ Pass an input element into a new instance of `Ca11y`, and optionally pass in pro
 ```
 
 `fullName` and `label` values are read by screen readers. Provide `transitionDuration` if you are using the css `transition` property on the `.ca11y__picker` element to allow auto-focusing of the selected day on transition end.
+
+### HTML5 Date Inputs and Ca11y
+
+Ca11y upgrades standard text inputs to datepickers. If you're interested in using the native HTML5 datepicker via `<input type="date">`, consider loading Ca11y based on a feature test, like this one (pulled from Modernizr):
+
+```js
+function isDateInputSupported() {
+    var input = document.createElement('input')
+    input.setAttribute('type', 'date')
+    var isDate = input.type !== 'text' && 'style' in input
+    var testValue = '1)'
+    if (isDate) {
+        input.value = testValue
+        input.style.cssText = 'position:absolute;visibility:hidden;'
+        isDate = input.value != testValue
+    }
+    return isDate
+}
+```
 
 ## Demo Locally
 ```
