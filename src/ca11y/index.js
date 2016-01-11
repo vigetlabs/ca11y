@@ -7,12 +7,34 @@ import template from './lib/template'
 
 class Ca11y {
   constructor(el, options = {}) {
-    Ca11y.pickers.push(this)
-    this.props = Object.assign({}, defaults, options, { id: Ca11y.pickers.length })
-    this.setInitialState()
-    this.setUI(el)
-    this.selectDay(this.state.day, false, true)
-    this.listen()
+    const props = Object.assign({}, defaults, options)
+    if (this.shouldConstruct(el, props)) {
+      Ca11y.pickers.push(this)
+      this.props = Object.assign({}, props, { id: Ca11y.pickers.length })
+      this.setInitialState()
+      this.setUI(el)
+      this.selectDay(this.state.day, false, true)
+      this.listen()
+    } else {
+      console && console.warn('Ca11y instance not created for element', el)
+    }
+  }
+
+  shouldConstruct(el, props) {
+    return props.preferNative === false || !this.isDateInputSupported(el)
+  }
+
+  isDateInputSupported(el) {
+    let input = document.createElement('input')
+    input.setAttribute('type', 'date')
+    let isDate = input.type !== 'text' && 'style' in input
+    let smile = '1)'
+    if (isDate) {
+      input.value = smile
+      input.style.cssText = 'position:absolute;visibility:hidden;'
+      isDate = input.value != smile
+    }
+    return isDate
   }
 
   setInitialState() {
@@ -200,6 +222,7 @@ class Ca11y {
   }
 
   setUI(el) {
+    el.setAttribute('type', 'text') // in case this is [type="date"]
     const calendarId = `ca11y-${ this.props.id }__picker`
 
     this.ui = {
