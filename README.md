@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/vigetlabs/ca11y.png?label=ready&title=Ready)](https://waffle.io/vigetlabs/ca11y)
 **NOTE:** This is a work in progress in early development! Not quite ready for prime-time. [Issues](https://github.com/vigetlabs/ca11y/issues) and [pull requests](https://github.com/vigetlabs/ca11y/pulls) welcome.
 
 # ca11y
