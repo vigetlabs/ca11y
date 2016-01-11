@@ -8,4 +8,4 @@ machine:
 dependencies:
   cache_directories:
     - "node_modules"
-    - "~/nvm"
+    - "~/nvm/v0.12.2"
