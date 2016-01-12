@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/vigetlabs/ca11y.png?label=ready&title=Ready)](https://waffle.io/vigetlabs/ca11y)
 **NOTE:** This is a work in progress in early development! Not quite ready for prime-time. [Issues](https://github.com/vigetlabs/ca11y/issues) and [pull requests](https://github.com/vigetlabs/ca11y/pulls) welcome.
 
 # ca11y [![Circle CI](https://circleci.com/gh/vigetlabs/ca11y/tree/master.svg?style=svg&circle-token=f911005636ea7f7467f9e2ebf07e2ee023f7d81b)](https://circleci.com/gh/vigetlabs/ca11y/tree/master)
