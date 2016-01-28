@@ -14,7 +14,7 @@
   "scripts": {
     "test": "NODE_ENV=test karma start karma.config.js --single-run",
     "test-watch": "NODE_ENV=test karma start karma.config.js",
-    "deploy": "NODE_ENV=production  webpack src/ca11y/index.js example/demo.js -p && npm run sass && gh-pages -d example -b gh-pages",
+    "deploy": "NODE_ENV=production webpack src/demo.js example/demo.js -p && npm run sass && gh-pages -d example -b gh-pages",
     "start": "webpack src/demo.js example/demo.js & npm run sass && npm run watch",
     "sass": "node-sass src/demo.sass example/demo.css -i",
     "watch": "node-sass src/demo.sass example/demo.css -i -w & webpack src/demo.js example/demo.js --watch & browser-sync start --server example --files 'example/*, index.html'",
