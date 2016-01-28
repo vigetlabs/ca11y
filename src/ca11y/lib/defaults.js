@@ -1,33 +1,35 @@
-import parse from './parse'
-import format from './format'
+import parser from './parse'
+import formatter from './format'
 
 export default {
-  parse,
-  format,
-  // If animating open the picker, specify the transitionDuration
-  transitionDuration: 200,
+  parser,
+  formatter,
+  format: ['mm', 'dd', 'yyyy'],
+  delimiter: "/",
+  transitionDuration: 200, // If animating open the picker, specify the transitionDuration
+  autofill: false,
   months: [
-    { fullName: 'January'   , displayName: 'Jan' } ,
-    { fullName: 'February'  , displayName: 'Feb' } ,
-    { fullName: 'March'     , displayName: 'Mar' } ,
-    { fullName: 'April'     , displayName: 'Apr' } ,
-    { fullName: 'May'       , displayName: 'May' } ,
-    { fullName: 'June'      , displayName: 'Jun' } ,
-    { fullName: 'July'      , displayName: 'Jul' } ,
-    { fullName: 'August'    , displayName: 'Aug' } ,
-    { fullName: 'September' , displayName: 'Sep' } ,
-    { fullName: 'October'   , displayName: 'Oct' } ,
-    { fullName: 'November'  , displayName: 'Nov' } ,
-    { fullName: 'December'  , displayName: 'Dec' }
+    { fullName: 'January'   , displayName: 'Jan', shortName: 'Jan' } ,
+    { fullName: 'February'  , displayName: 'Feb', shortName: 'Feb' } ,
+    { fullName: 'March'     , displayName: 'Mar', shortName: 'Mar' } ,
+    { fullName: 'April'     , displayName: 'Apr', shortName: 'Apr' } ,
+    { fullName: 'May'       , displayName: 'May', shortName: 'May' } ,
+    { fullName: 'June'      , displayName: 'Jun', shortName: 'Jun' } ,
+    { fullName: 'July'      , displayName: 'Jul', shortName: 'Jul' } ,
+    { fullName: 'August'    , displayName: 'Aug', shortName: 'Aug' } ,
+    { fullName: 'September' , displayName: 'Sep', shortName: 'Sep' } ,
+    { fullName: 'October'   , displayName: 'Oct', shortName: 'Oct' } ,
+    { fullName: 'November'  , displayName: 'Nov', shortName: 'Nov' } ,
+    { fullName: 'December'  , displayName: 'Dec', shortName: 'Dec' }
   ],
   days: [
-    { fullName: 'Sunday'    , displayName: 'S' } ,
-    { fullName: 'Monday'    , displayName: 'M' } ,
-    { fullName: 'Tuesday'   , displayName: 'T' } ,
-    { fullName: 'Wednesday' , displayName: 'W' } ,
-    { fullName: 'Thursday'  , displayName: 'T' } ,
-    { fullName: 'Friday'    , displayName: 'F' } ,
-    { fullName: 'Saturday'  , displayName: 'S' }
+    { fullName: 'Sunday'    , displayName: 'S', shortName: 'Sun' } ,
+    { fullName: 'Monday'    , displayName: 'M', shortName: 'Mon' } ,
+    { fullName: 'Tuesday'   , displayName: 'T', shortName: 'Tue' } ,
+    { fullName: 'Wednesday' , displayName: 'W', shortName: 'Wed' } ,
+    { fullName: 'Thursday'  , displayName: 'T', shortName: 'Thu' } ,
+    { fullName: 'Friday'    , displayName: 'F', shortName: 'Fri' } ,
+    { fullName: 'Saturday'  , displayName: 'S', shortName: 'Sat' }
   ],
   dayTitles: [
     'First',
@@ -41,8 +43,8 @@ export default {
     'Ninth',
     'Tenth',
     'Eleventh',
-    'Twelth',
-    'Thirtheenth',
+    'Twelfth',
+    'Thirteenth',
     'Fourteenth',
     'Fifteenth',
     'Sixteenth',
