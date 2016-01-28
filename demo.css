@@ -71,13 +71,13 @@ form {
     form input:focus {
       border-color: #ea42ad; }
 
-.ca11yndar {
+.ca11y {
   display: inline-block;
   height: 36px;
   position: relative;
   text-align: center; }
 
-.ca11yndar__header {
+.ca11y__header {
   color: #ea42ad;
   left: 0;
   letter-spacing: 4px;
@@ -88,23 +88,23 @@ form {
   text-align: left;
   top: 0; }
 
-.ca11yndar__month-display {
+.ca11y__month-display {
   display: block;
   font-size: 32px;
   margin-bottom: 4px;
   text-transform: uppercase; }
 
-.ca11yndar__year-display {
+.ca11y__year-display {
   margin-left: 2px; }
 
-.ca11yndar__day-names th {
+.ca11y__day-names th {
   color: #bfbfbf;
   font-size: 10px;
   font-weight: normal;
   height: 30px;
   width: 30px; }
 
-.ca11yndar__toggle {
+.ca11y__toggle {
   background-color: white;
   border-radius: 3px;
   border: 1px solid #ebebeb;
@@ -113,20 +113,20 @@ form {
   margin: 0;
   outline: none;
   padding: 0 8px; }
-  .ca11yndar__toggle:hover, .ca11yndar__toggle:focus {
+  .ca11y__toggle:hover, .ca11y__toggle:focus {
     color: #ea42ad; }
-  .ca11yndar__toggle:focus {
+  .ca11y__toggle:focus {
     border-color: #ea42ad; }
-  .ca11yndar__toggle > svg {
+  .ca11y__toggle > svg {
     display: block;
     height: 24px;
     width: 24px; }
 
-.ca11yndar__nav {
+.ca11y__nav {
   background-color: #ebebeb;
   border-radius: 100px;
   border: none;
-  bottom: 14px;
+  bottom: 12px;
   color: inherit;
   display: block;
   font-weight: bold;
@@ -137,19 +137,19 @@ form {
   position: absolute;
   transition: all .2s ease-in-out;
   width: 24px; }
-  .ca11yndar__nav svg {
+  .ca11y__nav svg {
     display: block;
     height: 100%;
     width: 100%; }
-  .ca11yndar__nav:hover, .ca11yndar__nav:focus {
+  .ca11y__nav:hover, .ca11y__nav:focus {
     background-color: #ea42ad;
     color: #fff; }
-  .ca11yndar__nav.-next {
+  .ca11y__nav.-next {
     left: 40px; }
-  .ca11yndar__nav.-prev {
+  .ca11y__nav.-prev {
     left: 8px; }
 
-.ca11yndar__picker {
+.ca11y__picker {
   background-color: #fff;
   border-radius: 3px;
   border: 1px solid #ebebeb;
@@ -158,6 +158,7 @@ form {
   font-size: 11px;
   font-weight: bold;
   margin-top: 16px;
+  min-height: 240px;
   overflow: hidden;
   padding: 8px 8px 8px 90px;
   position: absolute;
@@ -165,33 +166,33 @@ form {
   top: 100%;
   transition: all .2s ease-in-out;
   z-index: 1; }
-  .ca11yndar__picker[aria-hidden="true"] {
+  .ca11y__picker[aria-hidden="true"] {
     opacity: 0;
     transform-origin: 100% 0%;
     transform: translate3d(24px, -64px, 0) scale(0.5);
     visibility: hidden; }
-  .ca11yndar__picker:hover .ca11yndar__day:hover, .ca11yndar__picker:hover .ca11yndar__day:hover:focus {
+  .ca11y__picker:hover .ca11y__day:hover, .ca11y__picker:hover .ca11y__day:hover:focus {
     background-color: rgba(234, 66, 173, 0.5); }
-  .ca11yndar__picker:hover .ca11yndar__day:focus {
+  .ca11y__picker:hover .ca11y__day:focus {
     background-color: transparent;
     color: inherit; }
 
-.ca11yndar__table {
+.ca11y__table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.ca11yndar__row:last-child .ca11yndar__cell {
+.ca11y__row:last-child .ca11y__cell {
   border-bottom: none; }
 
-.ca11yndar__cell {
+.ca11y__cell {
   padding: 0;
   position: relative; }
-  .ca11yndar__cell:first-child {
+  .ca11y__cell:first-child {
     border-left: none; }
-  .ca11yndar__cell:last-child {
+  .ca11y__cell:last-child {
     border-right: none; }
 
-.ca11yndar__day {
+.ca11y__day {
   appearance: none;
   background: transparent;
   border-radius: 32px;
@@ -204,12 +205,12 @@ form {
   outline: none;
   transition: all .2s ease-in-out;
   width: 32px; }
-  .ca11yndar__day.-today {
+  .ca11y__day.-today {
     color: #ea42ad; }
-  .ca11yndar__day.-selected {
+  .ca11y__day.-selected {
     background-color: #ea42ad;
     color: #fff; }
-  .ca11yndar__day:hover {
+  .ca11y__day:hover {
     background-color: rgba(234, 66, 173, 0.5); }
-  .ca11yndar__day:focus {
+  .ca11y__day:focus {
     border-color: rgba(234, 66, 173, 0.5); }
