@@ -108,7 +108,7 @@ class Ca11y {
       fullYear          : date.getFullYear(),
       totalDays         : util.getDays(year, month),
       firstWeekdayValue : util.getFirstDay(year, month),
-      formats: {
+      parsed: {
         d: day,
         dd:  zeroPad(day),
         ddd: this.props.days[date.getDay(day)].shortName,
@@ -364,14 +364,18 @@ class Ca11y {
    * @return { Void }
    **/
   render(silent) {
-    this.ui.monthHeader.innerHTML    = this.renderMonthHeader()
-    this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
-    this.ui.calendarDays.innerHTML   = this.renderRows()
-    this.ui.selectedDay              = this.ui.calendar.querySelector('.ca11y__day.-selected')
+    const { input, monthHeader, monthCaption, calendarDays, selectedDay, calendar } = this.ui
+    const { parsed } = this.state
+    const { format, formatter, delimiter, date, onSelect } = this.props
+    const formattedValue = formatter(parsed, format, delimiter, date)
+
+    monthHeader.innerHTML    = this.renderMonthHeader()
+    monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
+    calendarDays.innerHTML   = this.renderRows()
+    this.ui.selectedDay      = calendar.querySelector('.ca11y__day.-selected')
+
     // update the input to reflect new state
-    const state = this.state.formats
-    const { format, delimiter, date } = this.props
-    if(!silent) this.ui.input.value = this.props.formatter(state, format, delimiter, date)
+    if(!silent) onSelect(input, formattedValue, parsed, date)
   }
 }
 
