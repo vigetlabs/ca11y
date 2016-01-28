@@ -1,5 +1,5 @@
-import strftime from 'fast-strftime'
-
-export default function format(date) {
-  return strftime('%F', date)
+export default function format(state, format, delimiter, date) {
+  const chunks = format.map((format)=> state[format])
+  console.log(state)
+  return chunks.join(delimiter)
 }

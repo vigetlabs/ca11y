@@ -21,13 +21,15 @@
     "prepublish": "NODE_ENV=production rm -rf dist && babel src/ca11y -d dist && webpack src/ca11y dist/ca11y.min.js -p --output-library-target var --output-library Ca11y"
   },
   "keywords": [
+    "a11y",
+    "accessible",
     "calendar",
-    "datepicker",
+    "callendar",
+    "cally",
     "date",
+    "datepicker",
     "picker",
-    "time",
-    "vanilla",
-    "js"
+    "vanilla"
   ],
   "author": "Dan Tello",
   "license": "MIT",
@@ -53,7 +55,6 @@
     "webpack": "1.12.9"
   },
   "dependencies": {
-    "delegate": "git://github.com/vigetlabs/delegate#3.0.1",
-    "fast-strftime": "1.1.1"
+    "delegate": "3.0.1"
   }
 }

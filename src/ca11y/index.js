@@ -1,12 +1,11 @@
 import delegate from 'delegate'
 import defaults from './lib/defaults'
-import zeroPad  from './lib/zeroPad'
 import keys     from './lib/keys'
 import styles   from './lib/styles'
 import template from './lib/template'
 import validate from './lib/validate'
 import util     from './lib/util'
-
+import zeroPad  from './lib/zeroPad'
 /**
  * Ca11y constructor.
  *
@@ -23,7 +22,7 @@ class Ca11y {
     this.setInitialState()
     this.setUI(el)
     this.listen()
-    this.render()
+    this.render(!options.autofill)
   }
 
   /**
@@ -82,6 +81,9 @@ class Ca11y {
     this.ui.toggle       = this.ui.datePicker.querySelector('.ca11y__toggle')
     this.ui.picker       = this.ui.datePicker.querySelector('.ca11y__picker')
     this.ui.wrapper.appendChild(this.ui.datePicker)
+
+    // If using ca11y, disable native datepickers
+    input.setAttribute('type', 'text')
   }
 
   /**
@@ -105,7 +107,19 @@ class Ca11y {
       monthDisplay      : month + 1,
       fullYear          : date.getFullYear(),
       totalDays         : util.getDays(year, month),
-      firstWeekdayValue : util.getFirstDay(year, month)
+      firstWeekdayValue : util.getFirstDay(year, month),
+      formats: {
+        d: day,
+        dd:  zeroPad(day),
+        ddd: this.props.days[date.getDay(day)].shortName,
+        dddd:  this.props.days[date.getDay(day)].fullName,
+        m: month + 1,
+        mm:  zeroPad(month + 1),
+        mmm: this.props.months[month].shortName,
+        mmmm:  this.props.months[month].fullName,
+        yy:  year.toString().substr(2,3),
+        yyyy: year
+      }
     }, silent)
   }
 
@@ -172,14 +186,13 @@ class Ca11y {
    **/
   onInputChange(e) {
     if (e.target.value) {
-      const result = this.props.parse(e.target.value)
+      const result = this.props.parser(e.target.value, this.props.format, this.props.delimiter)
 
       if (result.valid) {
         this.setDate(result.date)
       } else {
-        this.setDate(today) // show current month
-        // set state to NOT SELECTED
-
+        this.setDate(util.getToday()) // show current month
+        // #TODO: set state to focused, not selected
         // If the date is not valid, Ca11y will not display a selected date but
         // will show the current month.
       }
@@ -255,8 +268,6 @@ class Ca11y {
 
     this.setDate(date, silent)
 
-    // update the input to reflect new state
-    if (!silent) this.ui.input.value = this.props.format(this.state.date)
     if (!keepOpen) this.close(silent)
   }
 
@@ -352,12 +363,15 @@ class Ca11y {
    * html content, the calendar days html content, and the selected day DOM node reference.
    * @return { Void }
    **/
-  render() {
-    // no super call because super `render` is a virtual method (not implemented in Base prototype)
+  render(silent) {
     this.ui.monthHeader.innerHTML    = this.renderMonthHeader()
     this.ui.monthCaption.textContent = `${this.state.monthNameFull} ${this.state.fullYear}`
     this.ui.calendarDays.innerHTML   = this.renderRows()
     this.ui.selectedDay              = this.ui.calendar.querySelector('.ca11y__day.-selected')
+    // update the input to reflect new state
+    const state = this.state.formats
+    const { format, delimiter, date } = this.props
+    if(!silent) this.ui.input.value = this.props.formatter(state, format, delimiter, date)
   }
 }
 
@@ -370,8 +384,11 @@ Ca11y.pickers = []
  * Ca11y.init is used to instantiate multiple datepickers on a page simultaneously.
  **/
 Ca11y.init = function(selector, options) {
-  const datePickers = Array.from(document.querySelectorAll(selector) || 0)
-  datePickers.forEach(input => new Ca11y(input, options))
+  const datePickers = document.querySelectorAll(selector)
+  for (let i = 0; i < datePickers.length; i++) {
+    const input = datePickers[i]
+    new Ca11y(input, options)
+  };
 }
 
 export default Ca11y
