@@ -1,9 +1,11 @@
 import parser from './parse'
 import formatter from './format'
+import onSelect from './onSelect'
 
 export default {
   parser,
   formatter,
+  onSelect,
   format: ['mm', 'dd', 'yyyy'],
   delimiter: "/",
   transitionDuration: 200, // If animating open the picker, specify the transitionDuration

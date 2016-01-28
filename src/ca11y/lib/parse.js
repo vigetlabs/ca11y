@@ -72,7 +72,11 @@ export default function parser(string, format, delimiter) {
 
   const { yyyy, mm, dd } = normalized
   const valid = yyyy && mm && dd
-  console.log(normalized)
-  const date = new Date(`${yyyy}-${mm}-${dd}`)
+
+  const date = new Date()
+  const offset = date.getTimezoneOffset() * 60 * 1000
+  const parsed = Date.parse(`${yyyy}-${mm}-${dd}`)
+  date.setTime(parsed + offset)
+
   return { date, valid }
 }
