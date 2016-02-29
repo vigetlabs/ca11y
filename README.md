@@ -1,32 +1,52 @@
-[![Stories in Ready](https://badge.waffle.io/vigetlabs/ca11y.png?label=ready&title=Ready)](https://waffle.io/vigetlabs/ca11y)
-**NOTE:** This is a work in progress in early development! Not quite ready for prime-time. [Issues](https://github.com/vigetlabs/ca11y/issues) and [pull requests](https://github.com/vigetlabs/ca11y/pulls) welcome.
-
 # ca11y [![Circle CI](https://circleci.com/gh/vigetlabs/ca11y/tree/master.svg?style=svg&circle-token=f911005636ea7f7467f9e2ebf07e2ee023f7d81b)](https://circleci.com/gh/vigetlabs/ca11y/tree/master)
 
-An accessible, light-weight, dependency-free date picker `< 5kb` gzipped. Bring your own styles.
+[![NPM](https://nodei.co/npm/ca11y.png)](https://npmjs.org/package/ca11y)
+
+[![Stories in Ready](https://badge.waffle.io/vigetlabs/ca11y.png?label=ready&title=Ready)](https://waffle.io/vigetlabs/ca11y)
+
+An accessible, light-weight, vanilla date picker `< 6kb` gzipped. Bring your own styles, or play off the [demo](src/demo/theme.sass). 
+
+
 
 ```
 npm install ca11y --save
 ```
 
-**Demo:** http://code.viget.com/ca11y
+
+**This is a work in progress.** Accessibility testing thus far has been through basic keyboard usage and Apple VoiceOver on OS X Safari. We would love more testing and advice from the community!
+
+![Demo Gif](example/ca11y-demo-vo.gif)
+
+http://code.viget.com/ca11y
+
+Feedback, pull requests, bug reports and ideas for improvement. Got some? Head on over to [issues](https://github.com/vigetlabs/ca11y/issues). 
 
 ## Usage
 
-**Multiple instances by css selector:**
+##### Multiple instances by css selector:
 ```js
 import Ca11y from 'ca11y'
 Ca11y.init('.date-picker', options)
 ```
 
-**Single input element:**
+##### Single input element:
 ```js
 import Ca11y from 'ca11y'
 const input = document.getElementById('#date-input')
 const datePicker = new Ca11y(input, options)
 ```
 
-Pass any of the options listed below to override [the defaults](https://github.com/vigetlabs/ca11y/blob/master/src/ca11y/lib/defaults.js).
+Pass any of the [options listed below](#options) to override [the defaults](https://github.com/vigetlabs/ca11y/blob/master/src/ca11y/lib/defaults.js).
+
+##### Styling:
+
+`Ca11y` just provides the markup and functionality. You're on the hook to provide css. Feel free to use the styles from the [demo](src/demo/theme.sass) as a starting point. At the very least, you'll need to something like this to hide the date-picker when inactive:
+
+```sass
+.ca11y__picker[aria-hidden="true"] {
+  display: none;
+}
+```
 
 ## Options
 ### Basic
