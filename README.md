@@ -194,10 +194,10 @@ The `html` will be rendered as the previous month button. The `label` is screen-
 
 ### Advanced
 #### `parser`
-[See default.](src/ca11y/lib/parse)
+[See default.](src/ca11y/lib/parse.js)
 
 #### `formatter`
-[See default.](src/ca11y/lib/format)
+[See default.](src/ca11y/lib/format.js)
 
 ### HTML5 Date Inputs and Ca11y
 
