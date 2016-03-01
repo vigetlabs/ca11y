@@ -124,6 +124,8 @@ class Ca11y {
         yyyy: year
       }
     }, silent)
+
+    if (this.props.onDaySet) this.props.onDaySet(this.state)
   }
 
   /**

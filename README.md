@@ -199,6 +199,20 @@ The `html` will be rendered as the previous month button. The `label` is screen-
 #### `formatter`
 [See default.](src/ca11y/lib/formatter.js)
 
+#### `onDaySelected`
+
+Callback that fires when a day is selected. Note: This also fires when ca11y auto-selects today’s date for inputs with no value.
+
+```js
+const datePicker = new Ca11y(input, {
+  prev: {
+    onDaySet: function(state) {
+      console.log(state) // Object {today: Object, date: Thu Jan 01 2015 00:00:00 GMT-0700 (MST), day: 1, monthName: "Jan", monthNameFull: "January"…}
+    }
+  }
+})
+```
+
 ### HTML5 Date Inputs and Ca11y
 
 Ca11y upgrades standard text inputs to date-pickers. If you're interested in using the native HTML5 date-picker via `<input type="date">`, consider loading Ca11y based on a feature test, like this one (pulled from Modernizr):
