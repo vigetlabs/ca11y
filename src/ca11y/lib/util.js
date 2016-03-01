@@ -1,12 +1,22 @@
 export default {
-  getToday() {
-    const today = new Date()
+  isDateValid(date) {
+    // http://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+    if (Object.prototype.toString.call(date) !== '[object Date]') {
+      return false
+    }
+    return !isNaN(date.getTime())
+  },
 
-    return {
-      date     : today,
-      fullYear : today.getFullYear(),
-      day      : today.getDate(),
-      month    : today.getMonth()
+  getDateInfo(date) {
+    if (this.isDateValid(date)) {
+      return {
+        date     : date,
+        fullYear : date.getFullYear(),
+        day      : date.getDate(),
+        month    : date.getMonth()
+      }
+    } else {
+      return false
     }
   },
 

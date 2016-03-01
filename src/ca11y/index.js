@@ -19,7 +19,7 @@ class Ca11y {
     Ca11y.pickers.push(this)
     validate(options)
     this.props = Object.assign({}, defaults, options, { id: Ca11y.pickers.length })
-    this.setInitialState()
+    this.setInitialState(el.value)
     this.setUI(el)
     this.listen()
     this.render(!options.autofill)
@@ -38,13 +38,16 @@ class Ca11y {
    * Initializes Ca11y's state. Initially set's Ca11y to have today's date selected.
    * @return { Void }
    **/
-  setInitialState() {
-    const today = util.getToday()
+  setInitialState(value) {
+    const parsedValue    = this.props.parser(value, this.props.format, this.props.delimiter).date
+    const dateFromValue = util.getDateInfo(parsedValue)
+    const today         = util.getDateInfo(new Date())
+    const initialDate   = dateFromValue || today
 
     this.state         = {}
     this.subscriptions = []
     this.setState({ today }, true)
-    this.setDate(today.date, true)
+    this.setDate(initialDate.date, true)
   }
 
   /**
