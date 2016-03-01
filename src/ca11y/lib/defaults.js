@@ -1,5 +1,5 @@
-import parser from './parse'
-import formatter from './format'
+import parser from './parser'
+import formatter from './formatter'
 import onSelect from './onSelect'
 
 export default {

@@ -4,7 +4,7 @@
 
 [![Stories in Ready](https://badge.waffle.io/vigetlabs/ca11y.png?label=ready&title=Ready)](https://waffle.io/vigetlabs/ca11y)
 
-An accessible, light-weight, vanilla date picker `< 6kb` gzipped. Bring your own styles, or play off the [demo](src/demo/theme.sass). 
+An accessible, light-weight, vanilla date picker `< 6kb` gzipped. Bring your own styles, or play off the [demo](src/demo/theme.sass).
 
 
 
@@ -19,7 +19,7 @@ npm install ca11y --save
 
 http://code.viget.com/ca11y
 
-Feedback, pull requests, bug reports and ideas for improvement. Got some? Head on over to [issues](https://github.com/vigetlabs/ca11y/issues). 
+Feedback, pull requests, bug reports and ideas for improvement. Got some? Head on over to [issues](https://github.com/vigetlabs/ca11y/issues).
 
 ## Usage
 
@@ -56,11 +56,11 @@ const datePicker = new Ca11y(input, {
   format: ['mm', 'dd', 'yyyy'] // default
 })
 ```
-A an `Array` of date codes to specify your desired format. Joined with `options.delimiter`. 
+A an `Array` of date codes to specify your desired format. Joined with `options.delimiter`.
 
 Available formats:
 
- key   | value   
+ key   | value
 -----------|---------
 **d**    | Day of the month as digits; no leading zero for single-digit days.
 **dd**   | Day of the month as digits; leading zero for single-digit days.
@@ -105,7 +105,7 @@ Set to `true` if you want a blank input to be auto-filled with today's date.
 ```js
 const datePicker = new Ca11y(input, {
   onSelect: onSelect(input, value, state, date) {
-    input.value = value 
+    input.value = value
   }  // default
 })
 ```
@@ -194,10 +194,10 @@ The `html` will be rendered as the previous month button. The `label` is screen-
 
 ### Advanced
 #### `parser`
-[See default.](src/ca11y/lib/parse.js)
+[See default.](src/ca11y/lib/parser.js)
 
 #### `formatter`
-[See default.](src/ca11y/lib/format.js)
+[See default.](src/ca11y/lib/formatter.js)
 
 ### HTML5 Date Inputs and Ca11y
 
