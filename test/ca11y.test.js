@@ -18,13 +18,13 @@ describe('Ca11y', () => {
       document.body.innerHTML = ''
     })
 
-    it('throws if options.format is declared but not a function', () => {
-      const init = () => new Ca11y(input, { format: 'notafunction' })
+    it('throws if options.formatter is declared but not a function', () => {
+      const init = () => new Ca11y(input, { formatter: 'notafunction' })
       assert.throws(init, TypeError)
     })
 
-    it('throws if options.parse is declared but not a function', () => {
-      const init = () => new Ca11y(input, { parse: 'notafunction' })
+    it('throws if options.parser is declared but not a function', () => {
+      const init = () => new Ca11y(input, { parser: 'notafunction' })
       assert.throws(init, TypeError)
     })
   })
