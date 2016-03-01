@@ -279,6 +279,7 @@ class Ca11y {
    * @return { Void }
    **/
   incrementMonth(delta) {
+    this.cancelClose()
     let month = this.state.month + delta
     let year  = this.state.fullYear
 
