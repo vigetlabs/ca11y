@@ -39,13 +39,12 @@ class Ca11y {
    * @return { Void }
    **/
   setInitialState(value) {
-    const parsedValue    = this.props.parser(value, this.props.format, this.props.delimiter).date
+    const parsedValue   = this.props.parser(value, this.props.format, this.props.delimiter)
     const dateFromValue = util.getDateInfo(parsedValue)
     const today         = util.getDateInfo(new Date())
     const initialDate   = dateFromValue || today
-
-    this.state         = {}
-    this.subscriptions = []
+    this.state          = {}
+    this.subscriptions  = []
     this.setState({ today }, true)
     this.setDate(initialDate.date, true)
   }
@@ -189,10 +188,10 @@ class Ca11y {
    **/
   onInputChange(e) {
     if (e.target.value) {
-      const result = this.props.parser(e.target.value, this.props.format, this.props.delimiter)
+      const parsedDate = this.props.parser(e.target.value, this.props.format, this.props.delimiter)
 
-      if (result.valid) {
-        this.setDate(result.date)
+      if (parsedDate) {
+        this.setDate(parsedDate)
       } else {
         this.setDate(util.getToday()) // show current month
         // #TODO: set state to focused, not selected

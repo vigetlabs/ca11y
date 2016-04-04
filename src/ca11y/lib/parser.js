@@ -1,4 +1,5 @@
 import zeroPad from './zeroPad'
+import util from './util'
 
 export function inferCenturyFromTwoDigitYear(year) {
   const thisYear = new Date().getFullYear()
@@ -17,46 +18,48 @@ export function parseChunk(format, value) {
   switch (format) {
     case 'd':
       return {
-        type: 'dd',
-        value: zeroPad(value)
+        type: 'day',
+        value: Number(value)
       }
     case 'dd':
       return {
-        type: 'dd',
-        value: value
+        type: 'day',
+        value: Number(value)
       }
     case 'm':
       return {
-        type: 'mm',
-        value: zeroPad(value)
+        type: 'month',
+        value: Number(value)
       }
     case 'mm':
       return {
-        type: 'mm',
-        value: value
+        type: 'month',
+        value: Number(value - 1)
       }
     case 'mmm':
       timestamp = Date.parse(`${dayStub} ${value} ${yearStub}`)
       return {
-        type: 'mm',
-        value: zeroPad(new Date(timestamp).getMonth())
+        type: 'month',
+        value: new Date(timestamp).getMonth()
       }
     case 'mmmm':
       timestamp = Date.parse(`${dayStub} ${value} ${yearStub}`)
       return {
-        type: 'mm',
-        value: zeroPad(new Date(timestamp).getMonth())
+        type: 'month',
+        value: new Date(timestamp).getMonth()
       }
     case 'yy':
       return {
-        type: 'yyyy',
-        value: `${inferCenturyFromTwoDigitYear(value)}${value}`
+        type: 'year',
+        value: Number(`${inferCenturyFromTwoDigitYear(value)}${value}`)
       }
     case 'yyyy':
       return {
-        type: 'yyyy',
+        type: 'year',
         value: value
       }
+    default:
+      throw new Error(`${format} is not a valid date format!`)
   }
 }
 
@@ -70,13 +73,6 @@ export default function parser(string, format, delimiter) {
     return formats
   }, {})
 
-  const { yyyy, mm, dd } = normalized
-  const valid = yyyy && mm && dd
-
-  const date = new Date()
-  const offset = date.getTimezoneOffset() * 60 * 1000
-  const parsed = Date.parse(`${yyyy}-${mm}-${dd}`)
-  date.setTime(parsed + offset)
-
-  return { date, valid }
+  const { year, month, day } = normalized
+  return new Date(year, month, day)
 }
