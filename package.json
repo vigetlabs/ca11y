@@ -1,6 +1,6 @@
 {
   "name": "ca11y",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "A lightweight accessible datepicker",
   "homepage": "http://code.viget.com/ca11y/",
   "main": "dist/index.js",
