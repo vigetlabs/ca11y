@@ -50,6 +50,23 @@ Pass any of the [options listed below](#options) to override [the defaults](http
 
 ## Options
 ### Basic
+#### `options.container`
+```js
+const datePicker = new Ca11y(input, {
+  container: input.parentElement // default
+})
+```
+The HTML element where you want the datepicker to render. 
+
+#### `options.toggle`
+```js
+const datePicker = new Ca11y(input, {
+  toggle: this.ui.datePicker.querySelector('.ca11y__toggle') // default (dynaically created)
+})
+```
+The HTML element that should toggle datepicker when clicked. Defaults to a dynamically created button. 
+
+
 #### `options.format`
 ```js
 const datePicker = new Ca11y(input, {
@@ -156,17 +173,23 @@ dayTitles: [
 Read aloud by screen readers when a date receives focus. Override with other languages or desired text.
 
 #### UI
-#### `options.toggle`
+#### `options.toggleIcon`
 ```js
 const datePicker = new Ca11y(input, {
-  toggle: {
-    html: '<button>Toggle me!</button>',
-    label: 'Toggle Date Picker'
-  }
+  toggleIcon: "<svg>...</svg>" // defaults to Google material calendar icon
 })
 ```
 
-The `html` will be rendered as the toggle button next to the input. The `label` is screen-reader only. Defaults to `svg` iconography from https://design.google.com/icons/.
+The icon to be rendered as the toggle button label. Defaults to `svg` iconography from https://design.google.com/icons/.
+
+#### `options.toggleAriaLabel`
+```js
+const datePicker = new Ca11y(input, {
+  toggleAriaLabel: "Toggle the Datepicker" // default
+})
+```
+
+The `aria-label` that should be read by a screen reader when the (default) toggle button is focused.
 
 #### `options.next`
 ```js

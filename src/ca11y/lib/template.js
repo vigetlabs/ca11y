@@ -49,17 +49,22 @@ const TEMPLATES = {
   },
 
   calendar(data) {
-    return `
+    const defaultButton = `
       <button
         type="button"
         class="ca11y__toggle"
         aria-label="Toggle Date Picker"
         aria-controls="${ data.calendarId }"
-        aria-label="${ data.toggle.label }"
+        aria-label="${ data.toggleAriaLabel }"
       >
-        ${ data.toggle.html }
+        ${ data.toggleIcon }
       </button>
+    `
 
+    const button = data.toggle ? '' : defaultButton
+
+    return `
+      ${ button }
       <div
         role="dialog"
         id="${ data.calendarId }"

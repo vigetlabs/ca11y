@@ -62,7 +62,7 @@ class Ca11y {
 
     this.ui = {
       input      : input,
-      wrapper    : input.parentElement,
+      wrapper    : this.props.container || input.parentElement,
       datePicker : document.createElement('div')
     }
 
@@ -80,7 +80,7 @@ class Ca11y {
     this.ui.calendarDays = this.ui.datePicker.querySelector('.ca11y__days')
     this.ui.monthCaption = this.ui.datePicker.querySelector('.ca11y__caption')
     this.ui.monthHeader  = this.ui.datePicker.querySelector('.ca11y__header')
-    this.ui.toggle       = this.ui.datePicker.querySelector('.ca11y__toggle')
+    this.ui.toggle       = this.props.toggle || this.ui.datePicker.querySelector('.ca11y__toggle')
     this.ui.picker       = this.ui.datePicker.querySelector('.ca11y__picker')
     this.ui.wrapper.appendChild(this.ui.datePicker)
 
@@ -95,6 +95,9 @@ class Ca11y {
    * @return { Void }
    **/
   setDate(date, silent=false) {
+
+    if(date.toString() === "Invalid Date") return
+
     const month     = date.getMonth()
     const day       = date.getDate()
     const year      = date.getFullYear()
