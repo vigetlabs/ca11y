@@ -381,7 +381,7 @@ class Ca11y {
     this.ui.selectedDay      = calendar.querySelector('.ca11y__day.-selected')
 
     // update the input to reflect new state
-    if(!silent) onSelect(input, formattedValue, parsed, date)
+    if(!silent) onSelect(formattedValue, input, parsed, date)
   }
 }
 

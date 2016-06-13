@@ -121,7 +121,7 @@ Set to `true` if you want a blank input to be auto-filled with today's date.
 #### `options.onSelect`
 ```js
 const datePicker = new Ca11y(input, {
-  onSelect: onSelect(input, value, state, date) {
+  onSelect: onSelect(value, input, state, date) {
     input.value = value
   }  // default
 })
