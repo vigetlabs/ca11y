@@ -61,7 +61,7 @@ The HTML element where you want the datepicker to render.
 #### `options.toggle`
 ```js
 const datePicker = new Ca11y(input, {
-  toggle: this.ui.datePicker.querySelector('.ca11y__toggle') // default (dynaically created)
+  toggle: this.ui.datePicker.querySelector('.ca11y__toggle') // default (dynamically created)
 })
 ```
 The HTML element that should toggle datepicker when clicked. Defaults to a dynamically created button. 
