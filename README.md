@@ -32,7 +32,7 @@ Ca11y.init('.date-picker', options)
 ##### Single input element:
 ```js
 import Ca11y from 'ca11y'
-const input = document.getElementById('#date-input')
+const input = document.getElementById('date-input')
 const datePicker = new Ca11y(input, options)
 ```
 
